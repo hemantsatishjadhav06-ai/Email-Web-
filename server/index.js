@@ -37,17 +37,22 @@ function renderTemplate(str, vars) {
 // --- health & settings -------------------------------------------------------
 app.get('/api/health', (_req, res) => res.json({ ok: true, service: 'MailWave' }));
 
-app.get('/api/settings', asyncH(async (_req, res) => {
-  const v = await verifyTransport();
+// Fast: returns configuration without touching the network, so the UI paints instantly.
+app.get('/api/settings', (_req, res) => {
+  const live = deliveryMode();
+  // Before the transport is built lazily, report the mode implied by config.
+  const mode = live !== 'unconfigured' ? live : ((process.env.SMTP_HOST || '').trim() ? 'smtp' : 'ethereal');
   res.json({
-    deliveryMode: deliveryMode(),
+    deliveryMode: mode,
     smtpConfigured: Boolean((process.env.SMTP_HOST || '').trim()),
     smtpHost: process.env.SMTP_HOST || null,
     fromName: process.env.MAIL_FROM_NAME || 'MailWave',
     fromEmail: process.env.MAIL_FROM_EMAIL || process.env.SMTP_USER || null,
-    transport: v,
   });
-}));
+});
+
+// Slow: actually opens a connection to verify the transport (can take seconds).
+app.get('/api/settings/verify', asyncH(async (_req, res) => res.json(await verifyTransport())));
 
 // --- contacts ----------------------------------------------------------------
 app.get('/api/contacts', asyncH(async (_req, res) => res.json(await contacts.list())));
@@ -107,6 +112,51 @@ app.put('/api/templates/:id', asyncH(async (req, res) => {
 app.delete('/api/templates/:id', asyncH(async (req, res) => {
   const ok = await templates.remove(req.params.id);
   res.status(ok ? 204 : 404).end();
+}));
+
+// --- dashboard stats ---------------------------------------------------------
+app.get('/api/stats', asyncH(async (_req, res) => {
+  const [allContacts, allTemplates, allEmails] = await Promise.all([
+    contacts.list(), templates.list(), emails.list(),
+  ]);
+
+  // Count individual recipient deliveries across every send.
+  let delivered = 0;
+  let attempted = 0;
+  for (const e of allEmails) {
+    if (e.type === 'campaign') {
+      delivered += e.sent || 0;
+      attempted += e.total || (Array.isArray(e.to) ? e.to.length : 0);
+    } else {
+      attempted += 1;
+      if (e.status === 'sent') delivered += 1;
+    }
+  }
+
+  // Build a 7-day time series of messages sent (by day).
+  const days = [];
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    const key = d.toISOString().slice(0, 10);
+    days.push({ date: key, label: d.toLocaleDateString('en-US', { weekday: 'short' }), count: 0 });
+  }
+  const byDay = Object.fromEntries(days.map((d) => [d.date, d]));
+  for (const e of allEmails) {
+    const key = (e.createdAt || '').slice(0, 10);
+    if (byDay[key]) byDay[key].count += e.type === 'campaign' ? (e.sent || 0) : 1;
+  }
+
+  res.json({
+    contacts: allContacts.length,
+    templates: allTemplates.length,
+    sends: allEmails.length,
+    delivered,
+    attempted,
+    deliveryRate: attempted ? Math.round((delivered / attempted) * 100) : 0,
+    series: days,
+    recent: allEmails.slice(0, 6),
+  });
 }));
 
 // --- sending: transactional (single) & campaign (many) -----------------------

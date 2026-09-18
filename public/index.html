@@ -3,132 +3,171 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MailWave — Email System</title>
+  <title>MailWave</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📨</text></svg>" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%237763F1'/><path d='M20 34l30 22 30-22' fill='none' stroke='white' stroke-width='7' stroke-linecap='round' stroke-linejoin='round'/><rect x='20' y='30' width='60' height='42' rx='7' fill='none' stroke='white' stroke-width='7'/></svg>" />
 </head>
 <body>
-  <header class="topbar">
-    <div class="brand">
-      <span class="logo">📨</span>
-      <div>
-        <h1>MailWave</h1>
-        <p class="tagline">Send, manage &amp; track your email</p>
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="3"/><path d="m3 6 9 7 9-7"/>
+          </svg>
+        </span>
+        <div class="brand-text">
+          <strong>MailWave</strong>
+          <small>Email platform</small>
+        </div>
       </div>
-    </div>
-    <div id="mode-badge" class="badge" title="Current delivery mode">…</div>
-  </header>
 
-  <nav class="tabs">
-    <button class="tab active" data-tab="compose">Compose</button>
-    <button class="tab" data-tab="campaign">Campaign</button>
-    <button class="tab" data-tab="contacts">Contacts</button>
-    <button class="tab" data-tab="templates">Templates</button>
-    <button class="tab" data-tab="history">History</button>
-    <button class="tab" data-tab="settings">Settings</button>
-  </nav>
+      <nav class="nav">
+        <p class="nav-label">Messaging</p>
+        <button class="nav-item active" data-tab="dashboard">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg><span>Dashboard</span></button>
+        <button class="nav-item" data-tab="compose">
+          <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg><span>Compose</span></button>
+        <button class="nav-item" data-tab="campaign">
+          <svg viewBox="0 0 24 24"><path d="m3 11 18-5v12L3 14v-3Z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg><span>Campaigns</span></button>
 
-  <main>
-    <!-- Compose (transactional) -->
-    <section id="compose" class="panel active">
-      <h2>Compose email</h2>
-      <p class="hint">Send a single message to one recipient.</p>
-      <form id="compose-form" class="card form">
-        <label>To
-          <input type="email" name="to" placeholder="person@example.com" required />
-        </label>
-        <label>Subject
-          <input type="text" name="subject" placeholder="Subject line" required />
-        </label>
-        <label>Message (HTML allowed)
-          <textarea name="html" rows="10" placeholder="<p>Hello!</p>"></textarea>
-        </label>
-        <div class="row">
-          <button type="submit" class="btn primary">Send email</button>
-          <span class="load-template">
-            Load template:
-            <select id="compose-template"><option value="">—</option></select>
-          </span>
+        <p class="nav-label">Audience</p>
+        <button class="nav-item" data-tab="contacts">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Contacts</span></button>
+        <button class="nav-item" data-tab="templates">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M8 13h8"/><path d="M8 17h5"/></svg><span>Templates</span></button>
+
+        <p class="nav-label">Activity</p>
+        <button class="nav-item" data-tab="history">
+          <svg viewBox="0 0 24 24"><path d="M3 3v5h5"/><path d="M3.05 13A9 9 0 1 0 6 5.3L3 8"/><path d="M12 7v5l4 2"/></svg><span>Logs</span></button>
+        <button class="nav-item" data-tab="settings">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg><span>Settings</span></button>
+      </nav>
+
+      <div class="sidebar-foot">
+        <div class="delivery-chip">
+          <span class="dot" id="mode-dot"></span>
+          <div>
+            <small>Delivery</small>
+            <strong id="mode-badge">…</strong>
+          </div>
         </div>
-      </form>
-    </section>
-
-    <!-- Campaign (bulk) -->
-    <section id="campaign" class="panel">
-      <h2>Send a campaign</h2>
-      <p class="hint">Send to your contacts. Use <code>{{name}}</code> and <code>{{email}}</code> to personalize.</p>
-      <form id="campaign-form" class="card form">
-        <label>Subject
-          <input type="text" name="subject" placeholder="Hello {{name}}!" required />
-        </label>
-        <label>Message (HTML allowed)
-          <textarea name="html" rows="9" placeholder="<p>Hi {{name}}, ...</p>"></textarea>
-        </label>
-        <fieldset class="recipients">
-          <legend>Recipients</legend>
-          <label class="inline"><input type="radio" name="audience" value="all" checked /> All contacts</label>
-          <label class="inline"><input type="radio" name="audience" value="select" /> Choose specific</label>
-          <div id="campaign-contact-list" class="checklist hidden"></div>
-        </fieldset>
-        <div class="row">
-          <button type="submit" class="btn primary">Send campaign</button>
-          <span class="load-template">
-            Load template:
-            <select id="campaign-template"><option value="">—</option></select>
-          </span>
-        </div>
-      </form>
-    </section>
-
-    <!-- Contacts -->
-    <section id="contacts" class="panel">
-      <h2>Contacts</h2>
-      <form id="contact-form" class="card form inline-form">
-        <input type="text" name="name" placeholder="Name (optional)" />
-        <input type="email" name="email" placeholder="email@example.com" required />
-        <button type="submit" class="btn primary">Add contact</button>
-      </form>
-      <div id="contacts-list" class="list"></div>
-    </section>
-
-    <!-- Templates -->
-    <section id="templates" class="panel">
-      <h2>Templates</h2>
-      <form id="template-form" class="card form">
-        <input type="hidden" name="id" />
-        <label>Name <input type="text" name="name" placeholder="Welcome email" required /></label>
-        <label>Subject <input type="text" name="subject" placeholder="Welcome, {{name}}!" /></label>
-        <label>HTML body <textarea name="html" rows="8" placeholder="<p>Welcome {{name}}</p>"></textarea></label>
-        <div class="row">
-          <button type="submit" class="btn primary">Save template</button>
-          <button type="button" id="template-reset" class="btn ghost">Clear</button>
-        </div>
-      </form>
-      <div id="templates-list" class="list"></div>
-    </section>
-
-    <!-- History -->
-    <section id="history" class="panel">
-      <h2>Sent history</h2>
-      <button id="refresh-history" class="btn ghost small">Refresh</button>
-      <div id="history-list" class="list"></div>
-    </section>
-
-    <!-- Settings -->
-    <section id="settings" class="panel">
-      <h2>Settings &amp; delivery</h2>
-      <div id="settings-body" class="card"></div>
-      <div class="card help">
-        <h3>How delivery works</h3>
-        <ul>
-          <li><strong>SMTP</strong> — real email is sent using the <code>SMTP_*</code> values in your <code>.env</code>.</li>
-          <li><strong>Ethereal</strong> — no SMTP configured, so a preview inbox is used. Sent messages return a preview link (nothing reaches real inboxes).</li>
-          <li><strong>Stub</strong> — no network for the preview service; messages are logged only.</li>
-        </ul>
-        <p>Copy <code>.env.example</code> to <code>.env</code> and add your provider's SMTP details, then restart.</p>
       </div>
-    </section>
-  </main>
+    </aside>
+
+    <!-- Main -->
+    <main class="content">
+      <!-- Dashboard -->
+      <section id="dashboard" class="page active">
+        <header class="page-head">
+          <div><h1>Dashboard</h1><p>Overview of your email activity.</p></div>
+          <button class="btn primary" data-goto="compose">New email</button>
+        </header>
+
+        <div class="stat-grid" id="stat-grid"></div>
+
+        <div class="dash-grid">
+          <div class="card">
+            <div class="card-head"><h3>Messages sent</h3><span class="muted">Last 7 days</span></div>
+            <div class="chart" id="chart"></div>
+          </div>
+          <div class="card">
+            <div class="card-head"><h3>Recent activity</h3></div>
+            <div id="recent" class="recent"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Compose -->
+      <section id="compose" class="page">
+        <header class="page-head"><div><h1>Compose</h1><p>Send a single message to one recipient.</p></div></header>
+        <form id="compose-form" class="card form">
+          <div class="field"><label>To</label><input type="email" name="to" placeholder="person@example.com" required /></div>
+          <div class="field"><label>Subject</label><input type="text" name="subject" placeholder="Subject line" required /></div>
+          <div class="field"><label>Message <span class="muted">(HTML allowed)</span></label><textarea name="html" rows="10" placeholder="<p>Hello!</p>"></textarea></div>
+          <div class="form-foot">
+            <div class="template-pick"><label>Template</label><select id="compose-template"><option value="">None</option></select></div>
+            <button type="submit" class="btn primary">Send email</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Campaign -->
+      <section id="campaign" class="page">
+        <header class="page-head"><div><h1>Campaigns</h1><p>Send to your contacts. Personalize with <code>{{name}}</code> and <code>{{email}}</code>.</p></div></header>
+        <form id="campaign-form" class="card form">
+          <div class="field"><label>Subject</label><input type="text" name="subject" placeholder="Hello {{name}}!" required /></div>
+          <div class="field"><label>Message <span class="muted">(HTML allowed)</span></label><textarea name="html" rows="9" placeholder="<p>Hi {{name}}, ...</p>"></textarea></div>
+          <div class="field">
+            <label>Recipients</label>
+            <div class="segmented">
+              <label class="seg"><input type="radio" name="audience" value="all" checked /><span>All contacts</span></label>
+              <label class="seg"><input type="radio" name="audience" value="select" /><span>Choose specific</span></label>
+            </div>
+            <div id="campaign-contact-list" class="checklist hidden"></div>
+          </div>
+          <div class="form-foot">
+            <div class="template-pick"><label>Template</label><select id="campaign-template"><option value="">None</option></select></div>
+            <button type="submit" class="btn primary">Send campaign</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Contacts -->
+      <section id="contacts" class="page">
+        <header class="page-head"><div><h1>Contacts</h1><p>People you can send campaigns to.</p></div></header>
+        <form id="contact-form" class="card inline-card">
+          <input type="text" name="name" placeholder="Name (optional)" />
+          <input type="email" name="email" placeholder="email@example.com" required />
+          <button type="submit" class="btn primary">Add contact</button>
+        </form>
+        <div class="card table-card"><table class="tbl" id="contacts-tbl"></table></div>
+      </section>
+
+      <!-- Templates -->
+      <section id="templates" class="page">
+        <header class="page-head"><div><h1>Templates</h1><p>Reusable subject lines and HTML bodies.</p></div></header>
+        <div class="split">
+          <form id="template-form" class="card form">
+            <input type="hidden" name="id" />
+            <div class="field"><label>Name</label><input type="text" name="name" placeholder="Welcome email" required /></div>
+            <div class="field"><label>Subject</label><input type="text" name="subject" placeholder="Welcome, {{name}}!" /></div>
+            <div class="field"><label>HTML body</label><textarea name="html" rows="8" placeholder="<p>Welcome {{name}}</p>"></textarea></div>
+            <div class="form-foot">
+              <button type="button" id="template-reset" class="btn ghost">Clear</button>
+              <button type="submit" class="btn primary">Save template</button>
+            </div>
+          </form>
+          <div class="card table-card"><table class="tbl" id="templates-tbl"></table></div>
+        </div>
+      </section>
+
+      <!-- Logs / History -->
+      <section id="history" class="page">
+        <header class="page-head"><div><h1>Logs</h1><p>Every message you've sent.</p></div><button id="refresh-history" class="btn ghost">Refresh</button></header>
+        <div class="card table-card"><table class="tbl" id="history-tbl"></table></div>
+      </section>
+
+      <!-- Settings -->
+      <section id="settings" class="page">
+        <header class="page-head"><div><h1>Settings</h1><p>Delivery configuration.</p></div></header>
+        <div class="card" id="settings-body"></div>
+        <div class="card help">
+          <h3>How delivery works</h3>
+          <ul>
+            <li><span class="tag purple">SMTP</span> Real email is sent using the <code>SMTP_*</code> environment variables.</li>
+            <li><span class="tag amber">Preview</span> No SMTP configured — a preview inbox (Ethereal) is used; sends return a preview link.</li>
+            <li><span class="tag slate">Log only</span> No network for the preview service; messages are logged only.</li>
+          </ul>
+          <p class="muted">Set your provider's SMTP details as environment variables (host, port, user, pass), then restart. On Railway, use port <code>2525</code> — ports 25/465/587 are blocked.</p>
+        </div>
+      </section>
+    </main>
+  </div>
 
   <div id="toast" class="toast"></div>
   <script src="app.js"></script>
