@@ -1,0 +1,27 @@
+{
+  "name": "mailwave",
+  "version": "1.0.0",
+  "description": "MailWave — a self-contained email system: compose & send email over SMTP, manage contacts and templates, and track sent history.",
+  "type": "module",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "email",
+    "smtp",
+    "nodemailer",
+    "newsletter",
+    "mailwave"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "nodemailer": "^10.0.10"
+  }
+}
