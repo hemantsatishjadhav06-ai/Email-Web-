@@ -648,7 +648,7 @@ export function WorkspaceLayout() {
                       key: 'docs',
                       label: (
                         <a
-                          href="https://docs.mailwave.com/"
+                          href="https://github.com/hemantsatishjadhav06-ai/Email-Web-#readme"
                           target="_blank"
                           rel="noopener noreferrer"
                         >
@@ -660,7 +660,7 @@ export function WorkspaceLayout() {
                       key: 'report-issue',
                       label: (
                         <a
-                          href="https://github.com/mailwave/mailwave/issues"
+                          href="https://github.com/hemantsatishjadhav06-ai/Email-Web-/issues"
                           target="_blank"
                           rel="noopener noreferrer"
                         >

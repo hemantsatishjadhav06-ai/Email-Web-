@@ -1,16 +1,11 @@
-# Mailwave
+# Mail Wave
 
-[![Go Report Card](https://img.shields.io/badge/go%20report-A+-brightgreen.svg?style=flat)](https://goreportcard.com/report/github.com/Mailwave/mailwave)
-[![Go](https://github.com/Mailwave/mailwave/actions/workflows/go.yml/badge.svg)](https://github.com/Mailwave/mailwave/actions/workflows/go.yml)
-[![codecov](https://codecov.io/gh/Mailwave/mailwave/graph/badge.svg?token=VZ0HBEM9OZ)](https://codecov.io/gh/Mailwave/mailwave)
+**A self-hosted alternative to Mailchimp, Brevo, Mailjet, Listmonk, Mailerlite and Klaviyo.**
 
-**[☁️ Mailwave Cloud — from $16/month](https://www.mailwave.com/)** · **[🎯 Try the Live Demo](https://demo.mailwave.com/console/signin?email=demo@mailwave.com)**
+Mail Wave is a modern, self-hosted emailing platform for sending newsletters, campaigns and transactional emails at a fraction of the cost. Built with Go and React, it pairs enterprise-grade features — visual email builder, automations, A/B testing, web analytics — with the flexibility of a codebase you own.
 
-Skip the setup and get started instantly with **[Mailwave Cloud](https://www.mailwave.com/)** — fully managed hosting starting at just **$16/month**.
-
-**The open-source alternative to Mailchimp, Brevo, Mailjet, Listmonk, Mailerlite, and Klaviyo, Loop.so, etc.**
-
-Mailwave is a modern, self-hosted emailing platform that allows you to send newsletters and transactional emails at a fraction of the cost. Built with Go and React, it provides enterprise-grade features with the flexibility of open-source software.
+> **Live instance:** https://mailwave-production-72a7.up.railway.app
+> **Deploy your own:** see [Deployment](#-deployment) below — one Docker image + PostgreSQL. This project is a rebranded fork of the open-source [Notifuse](https://github.com/Notifuse/notifuse) platform; see [LICENSE](LICENSE).
 
 <img alt="Email Editor" src="https://github.com/user-attachments/assets/f650ac1b-58fd-44fb-884d-e9811255f1e4" />
 

@@ -5,7 +5,6 @@ import { Button, Input, Form, InputNumber, App, Divider, Row, Col, Collapse, Swi
 import { ApiOutlined, CheckOutlined, ArrowRightOutlined } from '@ant-design/icons'
 import { setupApi } from '../services/api/setup'
 import type { SetupConfig } from '../types/setup'
-import { getBrowserTimezone } from '../lib/timezoneNormalizer'
 import { useLingui } from '@lingui/react/macro'
 
 export default function SetupWizard() {
@@ -155,52 +154,9 @@ export default function SetupWizard() {
 
       await setupApi.initialize(setupConfig)
 
-      // Subscribe to newsletter if checked (fail silently)
-      if (values.subscribe_newsletter && values.root_email) {
-        try {
-          const contact: Record<string, unknown> = {
-            email: values.root_email
-          }
-
-          // Add timezone from browser (normalized to canonical IANA name)
-          try {
-            const timezone = getBrowserTimezone()
-            if (timezone) {
-              contact.timezone = timezone
-            }
-          } catch {
-            // Fail silently if timezone detection fails
-          }
-
-          // Only include custom fields if values are available
-          const endpoint = values.api_endpoint || apiEndpoint
-          if (endpoint) {
-            contact.custom_string_1 = endpoint
-          }
-
-          if (values.check_for_updates !== undefined) {
-            contact.custom_string_2 = values.check_for_updates ? 'true' : 'false'
-          }
-
-          if (values.telemetry_enabled !== undefined) {
-            contact.custom_string_3 = values.telemetry_enabled ? 'true' : 'false'
-          }
-
-          await fetch('https://email.mailwave.com/subscribe', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              workspace_id: 'mailwave',
-              contact,
-              list_ids: ['newsletter']
-            })
-          })
-        } catch {
-          // Fail silently - don't block setup if newsletter subscription fails
-        }
-      }
+      // Note: previously this posted the root admin's email to an external
+      // newsletter endpoint. Removed during the Mail Wave rebrand — a
+      // self-hosted install should not send the operator's address anywhere.
 
       // Show setup complete screen
       setSetupComplete(true)
@@ -389,16 +345,6 @@ export default function SetupWizard() {
                       )}
                     </div>
                   )}
-
-                  {/* Newsletter Subscription */}
-                  <Form.Item
-                    name="subscribe_newsletter"
-                    valuePropName="checked"
-                    label={t`Subscribe to the newsletter (new features...)`}
-                    style={{ marginTop: 24 }}
-                  >
-                    <Switch />
-                  </Form.Item>
 
                   {/* SMTP Configuration Section */}
                   {!configStatus.smtp_configured && (

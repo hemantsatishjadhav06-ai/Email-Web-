@@ -57,3 +57,7 @@ TODO.md
 # believe the tool is here.
 /licensegen
 
+
+# Local dev TLS certs (regenerated per machine — never commit)
+certs/*.pem
+console/certificates/*.pem

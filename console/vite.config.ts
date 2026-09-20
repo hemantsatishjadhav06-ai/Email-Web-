@@ -11,6 +11,20 @@ import path from 'path'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
+// Local dev HTTPS certs are optional and not committed. When present, the dev
+// server runs over HTTPS; when absent (CI / production build), it falls back to
+// HTTP so `npm run build` never depends on machine-local certificates.
+function devHttps() {
+  try {
+    return {
+      key: readFileSync(resolve(__dirname, 'certificates/key.pem')),
+      cert: readFileSync(resolve(__dirname, 'certificates/cert.pem')),
+    }
+  } catch {
+    return undefined
+  }
+}
+
 // https://vitejs.dev/config/
 export default defineConfig({
   base: '/console/',
@@ -25,10 +39,7 @@ export default defineConfig({
   ],
   server: {
     host: 'mailwavedev.com',
-    https: {
-      key: readFileSync(resolve(__dirname, 'certificates/key.pem')),
-      cert: readFileSync(resolve(__dirname, 'certificates/cert.pem'))
-    },
+    https: devHttps(),
     proxy: {
       '/config.js': {
         target: 'https://localapi.mailwave.com:4000',
