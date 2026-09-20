@@ -113,7 +113,7 @@ export default function SetupWizard() {
         setupConfig.smtp_username = typeof values.smtp_username === 'string' ? values.smtp_username : ''
         setupConfig.smtp_password = typeof values.smtp_password === 'string' ? values.smtp_password : ''
         setupConfig.smtp_from_email = typeof values.smtp_from_email === 'string' ? values.smtp_from_email : undefined
-        setupConfig.smtp_from_name = typeof values.smtp_from_name === 'string' ? values.smtp_from_name : 'Mailwave'
+        setupConfig.smtp_from_name = typeof values.smtp_from_name === 'string' ? values.smtp_from_name : 'Mail Wave'
         setupConfig.smtp_use_tls = typeof values.smtp_use_tls === 'boolean' ? values.smtp_use_tls : true
       }
 
@@ -308,7 +308,7 @@ export default function SetupWizard() {
         <div className="sm:mx-auto sm:w-full sm:max-w-3xl">
           {/* Logo */}
           <div className="text-center mb-8">
-            <img src="/console/logo.png" alt="Mailwave" className="mx-auto" width={120} />
+            <img src="/console/logo.png" alt="Mail Wave" className="mx-auto" width={120} />
           </div>
 
           <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
@@ -352,7 +352,7 @@ export default function SetupWizard() {
                   initialValues={{
                     smtp_port: 587,
                     smtp_use_tls: true,
-                    smtp_from_name: 'Mailwave',
+                    smtp_from_name: 'Mail Wave',
                     subscribe_newsletter: false,
                     telemetry_enabled: true,
                     check_for_updates: true
@@ -513,7 +513,7 @@ export default function SetupWizard() {
                         </Col>
                         <Col span={12}>
                           <Form.Item label={t`From Name`} name="smtp_from_name">
-                            <Input placeholder="Mailwave" />
+                            <Input placeholder="Mail Wave" />
                           </Form.Item>
                         </Col>
                       </Row>
