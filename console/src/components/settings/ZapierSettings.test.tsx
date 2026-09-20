@@ -26,7 +26,7 @@ const connectZapier = vi.mocked(workspaceService.connectZapier)
 const CONNECT_RESPONSE: ConnectZapierResponse = {
   status: 'success',
   token: 'tok_secret_value',
-  email: 'zapier-marketing-3f9a1c02@api.mailwave.com',
+  email: 'zapier-marketing-3f9a1c02@api.example.com',
   integration_id: 'int_zapier_1'
 }
 
@@ -35,7 +35,7 @@ const EXISTING: Integration = {
   id: 'int_zapier_1',
   name: 'Marketing',
   type: 'zapier',
-  zapier_settings: { api_key_email: 'zapier-marketing-3f9a1c02@api.mailwave.com' },
+  zapier_settings: { api_key_email: 'zapier-marketing-3f9a1c02@api.example.com' },
   created_at: '2026-08-01T10:00:00Z',
   updated_at: '2026-08-01T10:00:00Z'
 }
@@ -56,7 +56,7 @@ const clipboardWriteText = vi.fn().mockResolvedValue(undefined)
 
 beforeEach(() => {
   vi.clearAllMocks()
-  window.API_ENDPOINT = 'https://api.mailwave.com'
+  window.API_ENDPOINT = 'https://api.example.com'
   Object.defineProperty(navigator, 'clipboard', {
     value: { writeText: clipboardWriteText },
     configurable: true,
@@ -92,13 +92,13 @@ describe('the printed API URL', () => {
     renderScreen()
 
     const urlInput = screen.getByLabelText('API URL') as HTMLInputElement
-    expect(urlInput.value).toBe('https://api.mailwave.com')
+    expect(urlInput.value).toBe('https://api.example.com')
     expect(urlInput.value).not.toContain('ws1.')
 
     fireEvent.click(screen.getAllByRole('button', { name: /Copy/ })[0])
 
     await waitFor(() => {
-      expect(clipboardWriteText).toHaveBeenCalledWith('https://api.mailwave.com')
+      expect(clipboardWriteText).toHaveBeenCalledWith('https://api.example.com')
     })
   })
 })
@@ -109,7 +109,7 @@ describe('connect mode', () => {
 
     expect(screen.getByText('Read the Zapier setup guide')).toHaveAttribute(
       'href',
-      'https://docs.mailwave.com/integrations/zapier'
+      'https://docs.example.com/integrations/zapier'
     )
   })
 
@@ -271,7 +271,7 @@ describe('edit mode', () => {
     expect(saved.id).toBe('int_zapier_1')
     // The address is minted once and never reissued; a rename must not drop it on the floor.
     expect(saved.zapier_settings).toEqual({
-      api_key_email: 'zapier-marketing-3f9a1c02@api.mailwave.com'
+      api_key_email: 'zapier-marketing-3f9a1c02@api.example.com'
     })
   })
 })

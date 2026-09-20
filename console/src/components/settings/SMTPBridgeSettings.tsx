@@ -25,7 +25,7 @@ export function SMTPBridgeSettings() {
         <>
           <div style={{ marginBottom: '16px' }}>
             <a
-              href="https://docs.mailwave.com/concepts/transactional-api#smtp-bridge"
+              href="https://github.com/hemantsatishjadhav06-ai/Email-Web-#readme"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -65,7 +65,7 @@ export function SMTPBridgeSettings() {
         <div style={{ color: '#8c8c8c', fontStyle: 'italic' }}>
           {t`SMTP bridge is not configured.`}{' '}
           <a
-            href="https://docs.mailwave.com/installation#smtp-bridge-configuration"
+            href="https://github.com/hemantsatishjadhav06-ai/Email-Web-#readme"
             target="_blank"
             rel="noopener noreferrer"
           >

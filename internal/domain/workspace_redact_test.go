@@ -361,7 +361,7 @@ func TestWorkspaceRedactForPublic_IsSafeOnNilAndEmpty(t *testing.T) {
 // Redact leaves it whole and records no hint for it. A hint would be pointless anyway: the
 // address is not a credential, and the token it belongs to is never persisted to hint at.
 func TestWorkspaceRedact_KeepsZapierAPIKeyEmail(t *testing.T) {
-	const address = "zapier-marketing-3f9a1c02@v3.mailwave.com"
+	const address = "zapier-marketing-3f9a1c02@v3.example.com"
 	w := &Workspace{Integrations: Integrations{{
 		ID: "i", Name: "Marketing", Type: IntegrationTypeZapier,
 		ZapierSettings: &ZapierSettings{APIKeyEmail: address},

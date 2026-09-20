@@ -306,7 +306,7 @@ func demoVIPConciergeAutomation(workspaceID string) *domain.Automation {
 				"list_id": demoListVIPClub,
 				"status":  "active",
 			}, demoStr("vc-webhook"), demoNodeRow(1)),
-			// example.com, not a mailwave.com path: an unknown non-/api path there answers with a 307
+			// example.com, not a example.com path: an unknown non-/api path there answers with a 307
 			// to /console, which the webhook client follows with the POST body intact and stores the
 			// console's HTML as a successful response. A reserved domain cannot fake a success.
 			//

@@ -5679,7 +5679,7 @@ func TestIntegration_Validate_ZapierIntegration(t *testing.T) {
 			ID:             "int-zapier",
 			Name:           "Marketing",
 			Type:           IntegrationTypeZapier,
-			ZapierSettings: &ZapierSettings{APIKeyEmail: "zapier-marketing-3f9a1c02@v3.mailwave.com"},
+			ZapierSettings: &ZapierSettings{APIKeyEmail: "zapier-marketing-3f9a1c02@v3.example.com"},
 		}
 
 		assert.NoError(t, integration.Validate(passphrase))
@@ -5737,7 +5737,7 @@ func TestCreateIntegrationRequest_Validate_RejectsZapier(t *testing.T) {
 		"workspace_id": "workspace123",
 		"name": "Marketing",
 		"type": "zapier",
-		"zapier_settings": {"api_key_email": "zapier-marketing-3f9a1c02@v3.mailwave.com"}
+		"zapier_settings": {"api_key_email": "zapier-marketing-3f9a1c02@v3.example.com"}
 	}`)
 
 	var req CreateIntegrationRequest
@@ -5771,7 +5771,7 @@ func TestWorkspace_Validate_WithZapierIntegration(t *testing.T) {
 			ID:             "int-zapier",
 			Name:           "Marketing",
 			Type:           IntegrationTypeZapier,
-			ZapierSettings: &ZapierSettings{APIKeyEmail: "zapier-marketing-3f9a1c02@v3.mailwave.com"},
+			ZapierSettings: &ZapierSettings{APIKeyEmail: "zapier-marketing-3f9a1c02@v3.example.com"},
 		}},
 	}
 
@@ -5783,7 +5783,7 @@ func TestWorkspace_Validate_WithZapierIntegration(t *testing.T) {
 // address reaches the column readable. Nothing on a zapier record is a secret worth encrypting
 // — the token the address belongs to is handed over once at connect time and never stored.
 func TestIntegration_BeforeSave_ZapierAddressStaysPlaintext(t *testing.T) {
-	const address = "zapier-marketing-3f9a1c02@v3.mailwave.com"
+	const address = "zapier-marketing-3f9a1c02@v3.example.com"
 	integration := Integration{
 		ID:             "int-zapier",
 		Name:           "Marketing",

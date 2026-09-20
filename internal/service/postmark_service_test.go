@@ -60,7 +60,7 @@ func TestPostmarkService_ListWebhooks(t *testing.T) {
 			Webhooks: []domain.PostmarkWebhookResponse{
 				{
 					ID:            123,
-					URL:           "https://api.mailwave.com/webhooks/email?provider=postmark&workspace_id=ws-123&integration_id=int-456",
+					URL:           "https://api.example.com/webhooks/email?provider=postmark&workspace_id=ws-123&integration_id=int-456",
 					MessageStream: "outbound",
 					Triggers: &domain.PostmarkTriggers{
 						Delivery: &domain.PostmarkDeliveryTrigger{Enabled: true},
@@ -156,7 +156,7 @@ func TestPostmarkService_RegisterWebhook(t *testing.T) {
 
 		// Test webhook configuration
 		webhookConfig := domain.PostmarkWebhookConfig{
-			URL:           "https://api.mailwave.com/webhooks/email",
+			URL:           "https://api.example.com/webhooks/email",
 			MessageStream: "outbound",
 			Triggers: &domain.PostmarkTriggers{
 				Delivery: &domain.PostmarkDeliveryTrigger{Enabled: true},
@@ -209,7 +209,7 @@ func TestPostmarkService_RegisterWebhook(t *testing.T) {
 
 		// Test webhook configuration
 		webhookConfig := domain.PostmarkWebhookConfig{
-			URL:           "https://api.mailwave.com/webhooks/email",
+			URL:           "https://api.example.com/webhooks/email",
 			MessageStream: "outbound",
 		}
 
@@ -233,7 +233,7 @@ func TestPostmarkService_RegisterWebhook(t *testing.T) {
 
 		// Test webhook configuration
 		webhookConfig := domain.PostmarkWebhookConfig{
-			URL:           "https://api.mailwave.com/webhooks/email",
+			URL:           "https://api.example.com/webhooks/email",
 			MessageStream: "outbound",
 		}
 
@@ -326,7 +326,7 @@ func TestPostmarkService_GetWebhook(t *testing.T) {
 		// Mock response data
 		responseData := domain.PostmarkWebhookResponse{
 			ID:            webhookID,
-			URL:           "https://api.mailwave.com/webhooks/email",
+			URL:           "https://api.example.com/webhooks/email",
 			MessageStream: "outbound",
 			Triggers: &domain.PostmarkTriggers{
 				Delivery: &domain.PostmarkDeliveryTrigger{Enabled: true},
@@ -354,7 +354,7 @@ func TestPostmarkService_GetWebhook(t *testing.T) {
 		require.NoError(t, err)
 		require.NotNil(t, result)
 		assert.Equal(t, webhookID, result.ID)
-		assert.Equal(t, "https://api.mailwave.com/webhooks/email", result.URL)
+		assert.Equal(t, "https://api.example.com/webhooks/email", result.URL)
 		assert.Equal(t, "outbound", result.MessageStream)
 		assert.True(t, result.Triggers.Delivery.Enabled)
 		assert.True(t, result.Triggers.Bounce.Enabled)
@@ -426,7 +426,7 @@ func TestPostmarkService_UpdateWebhook(t *testing.T) {
 
 		// Test webhook configuration
 		webhookConfig := domain.PostmarkWebhookConfig{
-			URL:           "https://api.mailwave.com/webhooks/email/updated",
+			URL:           "https://api.example.com/webhooks/email/updated",
 			MessageStream: "outbound",
 			Triggers: &domain.PostmarkTriggers{
 				Delivery:      &domain.PostmarkDeliveryTrigger{Enabled: true},
@@ -483,7 +483,7 @@ func TestPostmarkService_UpdateWebhook(t *testing.T) {
 
 		// Test webhook configuration
 		webhookConfig := domain.PostmarkWebhookConfig{
-			URL:           "https://api.mailwave.com/webhooks/email",
+			URL:           "https://api.example.com/webhooks/email",
 			MessageStream: "outbound",
 		}
 
@@ -508,7 +508,7 @@ func TestPostmarkService_UpdateWebhook(t *testing.T) {
 
 		// Test webhook configuration
 		webhookConfig := domain.PostmarkWebhookConfig{
-			URL:           "https://api.mailwave.com/webhooks/email",
+			URL:           "https://api.example.com/webhooks/email",
 			MessageStream: "outbound",
 		}
 
@@ -536,7 +536,7 @@ func TestPostmarkService_UpdateWebhook(t *testing.T) {
 
 		// Test webhook configuration
 		webhookConfig := domain.PostmarkWebhookConfig{
-			URL:           "https://api.mailwave.com/webhooks/email",
+			URL:           "https://api.example.com/webhooks/email",
 			MessageStream: "outbound",
 		}
 
@@ -703,7 +703,7 @@ func TestPostmarkService_RegisterWebhooks(t *testing.T) {
 		service, httpClient, _, _ := setupPostmarkTest(t)
 		workspaceID := "workspace-123"
 		integrationID := "integration-456"
-		baseURL := "https://api.mailwave.com"
+		baseURL := "https://api.example.com"
 		eventTypes := []domain.EmailEventType{
 			domain.EmailEventDelivered,
 			domain.EmailEventBounce,
@@ -718,7 +718,7 @@ func TestPostmarkService_RegisterWebhooks(t *testing.T) {
 		}
 
 		// Expected callback URL
-		expectedURL := "https://api.mailwave.com/webhooks/email?provider=postmark&workspace_id=workspace-123&integration_id=integration-456"
+		expectedURL := "https://api.example.com/webhooks/email?provider=postmark&workspace_id=workspace-123&integration_id=integration-456"
 
 		// Mock list webhooks response
 		listResponse := &domain.PostmarkListWebhooksResponse{
@@ -795,7 +795,7 @@ func TestPostmarkService_RegisterWebhooks(t *testing.T) {
 		service, httpClient, _, _ := setupPostmarkTest(t)
 		workspaceID := "workspace-123"
 		integrationID := "integration-456"
-		baseURL := "https://api.mailwave.com"
+		baseURL := "https://api.example.com"
 		eventTypes := []domain.EmailEventType{
 			domain.EmailEventDelivered,
 			domain.EmailEventComplaint,
@@ -810,7 +810,7 @@ func TestPostmarkService_RegisterWebhooks(t *testing.T) {
 		}
 
 		// Expected callback URL
-		expectedURL := "https://api.mailwave.com/webhooks/email?provider=postmark&workspace_id=workspace-123&integration_id=integration-456"
+		expectedURL := "https://api.example.com/webhooks/email?provider=postmark&workspace_id=workspace-123&integration_id=integration-456"
 
 		// Mock an existing webhook in the list response
 		existingWebhook := domain.PostmarkWebhookResponse{
@@ -899,7 +899,7 @@ func TestPostmarkService_RegisterWebhooks(t *testing.T) {
 		service, _, _, _ := setupPostmarkTest(t)
 		workspaceID := "workspace-123"
 		integrationID := "integration-456"
-		baseURL := "https://api.mailwave.com"
+		baseURL := "https://api.example.com"
 		eventTypes := []domain.EmailEventType{domain.EmailEventDelivered}
 
 		// Call with nil provider config
@@ -938,7 +938,7 @@ func TestPostmarkService_RegisterWebhooks(t *testing.T) {
 		service, httpClient, _, _ := setupPostmarkTest(t)
 		workspaceID := "workspace-123"
 		integrationID := "integration-456"
-		baseURL := "https://api.mailwave.com"
+		baseURL := "https://api.example.com"
 		eventTypes := []domain.EmailEventType{domain.EmailEventDelivered}
 
 		// Provider config
@@ -975,7 +975,7 @@ func TestPostmarkService_RegisterWebhooks(t *testing.T) {
 		service, httpClient, _, _ := setupPostmarkTest(t)
 		workspaceID := "workspace-123"
 		integrationID := "integration-456"
-		baseURL := "https://api.mailwave.com"
+		baseURL := "https://api.example.com"
 		eventTypes := []domain.EmailEventType{domain.EmailEventDelivered}
 
 		// Provider config
@@ -1026,7 +1026,7 @@ func TestPostmarkService_RegisterWebhooks(t *testing.T) {
 		service, httpClient, _, _ := setupPostmarkTest(t)
 		workspaceID := "workspace-123"
 		integrationID := "integration-456"
-		baseURL := "https://api.mailwave.com"
+		baseURL := "https://api.example.com"
 		eventTypes := []domain.EmailEventType{domain.EmailEventDelivered}
 
 		providerConfig := &domain.EmailProvider{
@@ -1037,7 +1037,7 @@ func TestPostmarkService_RegisterWebhooks(t *testing.T) {
 			},
 		}
 
-		expectedURL := "https://api.mailwave.com/webhooks/email?provider=postmark&workspace_id=workspace-123&integration_id=integration-456"
+		expectedURL := "https://api.example.com/webhooks/email?provider=postmark&workspace_id=workspace-123&integration_id=integration-456"
 
 		listResponse := &domain.PostmarkListWebhooksResponse{
 			Webhooks: []domain.PostmarkWebhookResponse{},
@@ -1104,7 +1104,7 @@ func TestPostmarkService_GetWebhookStatus(t *testing.T) {
 		// Mock a webhook in the list response
 		webhook := domain.PostmarkWebhookResponse{
 			ID:            123,
-			URL:           "https://api.mailwave.com/webhooks/email?provider=postmark&workspace_id=workspace-123&integration_id=integration-456",
+			URL:           "https://api.example.com/webhooks/email?provider=postmark&workspace_id=workspace-123&integration_id=integration-456",
 			MessageStream: "outbound",
 			Triggers: &domain.PostmarkTriggers{
 				Delivery:      &domain.PostmarkDeliveryTrigger{Enabled: true},
@@ -1269,11 +1269,11 @@ func TestPostmarkService_UnregisterWebhooks(t *testing.T) {
 		// Mock webhooks in the list response
 		webhook1 := domain.PostmarkWebhookResponse{
 			ID:  123,
-			URL: "https://api.mailwave.com/webhooks/email?provider=postmark&workspace_id=workspace-123&integration_id=integration-456",
+			URL: "https://api.example.com/webhooks/email?provider=postmark&workspace_id=workspace-123&integration_id=integration-456",
 		}
 		webhook2 := domain.PostmarkWebhookResponse{
 			ID:  456,
-			URL: "https://api.mailwave.com/webhooks/email?provider=postmark&workspace_id=workspace-123&integration_id=integration-456&different=true",
+			URL: "https://api.example.com/webhooks/email?provider=postmark&workspace_id=workspace-123&integration_id=integration-456&different=true",
 		}
 
 		listResponse := &domain.PostmarkListWebhooksResponse{
@@ -1425,11 +1425,11 @@ func TestPostmarkService_UnregisterWebhooks(t *testing.T) {
 		// Mock webhooks in the list response
 		webhook1 := domain.PostmarkWebhookResponse{
 			ID:  123,
-			URL: "https://api.mailwave.com/webhooks/email?provider=postmark&workspace_id=workspace-123&integration_id=integration-456",
+			URL: "https://api.example.com/webhooks/email?provider=postmark&workspace_id=workspace-123&integration_id=integration-456",
 		}
 		webhook2 := domain.PostmarkWebhookResponse{
 			ID:  456,
-			URL: "https://api.mailwave.com/webhooks/email?provider=postmark&workspace_id=workspace-123&integration_id=integration-456",
+			URL: "https://api.example.com/webhooks/email?provider=postmark&workspace_id=workspace-123&integration_id=integration-456",
 		}
 
 		listResponse := &domain.PostmarkListWebhooksResponse{
@@ -1481,7 +1481,7 @@ func TestPostmarkService_FilterPostmarkWebhooks(t *testing.T) {
 	t.Run("Filter by URL, workspace, and integration", func(t *testing.T) {
 		// Setup
 		service, _, _, _ := setupPostmarkTest(t)
-		baseURL := "https://api.mailwave.com"
+		baseURL := "https://api.example.com"
 		workspaceID := "workspace-123"
 		integrationID := "integration-456"
 
@@ -1489,15 +1489,15 @@ func TestPostmarkService_FilterPostmarkWebhooks(t *testing.T) {
 		webhooks := []domain.PostmarkWebhookResponse{
 			{
 				ID:  1,
-				URL: "https://api.mailwave.com/webhooks/email?provider=postmark&workspace_id=workspace-123&integration_id=integration-456",
+				URL: "https://api.example.com/webhooks/email?provider=postmark&workspace_id=workspace-123&integration_id=integration-456",
 			},
 			{
 				ID:  2,
-				URL: "https://api.mailwave.com/webhooks/email?provider=postmark&workspace_id=workspace-123&integration_id=other-integration",
+				URL: "https://api.example.com/webhooks/email?provider=postmark&workspace_id=workspace-123&integration_id=other-integration",
 			},
 			{
 				ID:  3,
-				URL: "https://api.mailwave.com/webhooks/email?provider=postmark&workspace_id=other-workspace&integration_id=integration-456",
+				URL: "https://api.example.com/webhooks/email?provider=postmark&workspace_id=other-workspace&integration_id=integration-456",
 			},
 			{
 				ID:  4,
@@ -1523,7 +1523,7 @@ func TestPostmarkService_FilterPostmarkWebhooks(t *testing.T) {
 		webhooks := []domain.PostmarkWebhookResponse{
 			{
 				ID:  1,
-				URL: "https://api.mailwave.com/webhooks/email?provider=postmark&workspace_id=workspace-123&integration_id=integration-456",
+				URL: "https://api.example.com/webhooks/email?provider=postmark&workspace_id=workspace-123&integration_id=integration-456",
 			},
 			{
 				ID:  2,

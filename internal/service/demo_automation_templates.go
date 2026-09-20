@@ -129,8 +129,8 @@ func getCartRecoveryAContents() map[string]automationEmailContents {
 			heading:     "Still thinking it over? 🛒",
 			mainContent: "Hi {{contact.first_name}},<br><br>Your cart is still saved, exactly as you left it. Every order ships free, arrives in two days, and comes with a one-year warranty plus 90 days of complimentary technical support.<br><br>Trading in your current device? You can apply its value at checkout and see the new price instantly.",
 			buttonText:  "Return to My Cart",
-			buttonHref:  "https://demo.mailwave.com/cart?utm_source=mailwave&utm_medium=email&utm_campaign=cart-recovery-a",
-			footerText:  "You received this email because you started an order on our store.<br><a href=\"{{unsubscribe_url}}\">Unsubscribe</a> | <a href=\"https://demo.mailwave.com\">Visit the store</a>",
+			buttonHref:  "https://demo.example.com/cart?utm_source=mailwave&utm_medium=email&utm_campaign=cart-recovery-a",
+			footerText:  "You received this email because you started an order on our store.<br><a href=\"{{unsubscribe_url}}\">Unsubscribe</a> | <a href=\"https://demo.example.com\">Visit the store</a>",
 		},
 		"fr": {
 			lang:        "fr",
@@ -139,8 +139,8 @@ func getCartRecoveryAContents() map[string]automationEmailContents {
 			heading:     "Vous hésitez encore ? 🛒",
 			mainContent: "Bonjour {{contact.first_name}},<br><br>Votre panier est toujours là, exactement comme vous l'avez laissé. Chaque commande bénéficie de la livraison gratuite en deux jours, d'une garantie d'un an et de 90 jours d'assistance technique offerte.<br><br>Vous souhaitez reprendre votre appareil actuel ? Sa valeur est déduite au moment du paiement et le nouveau prix s'affiche immédiatement.",
 			buttonText:  "Revenir à mon panier",
-			buttonHref:  "https://demo.mailwave.com/cart?utm_source=mailwave&utm_medium=email&utm_campaign=cart-recovery-a",
-			footerText:  "Vous recevez cet e-mail car vous avez commencé une commande sur notre boutique.<br><a href=\"{{unsubscribe_url}}\">Se désabonner</a> | <a href=\"https://demo.mailwave.com\">Visiter la boutique</a>",
+			buttonHref:  "https://demo.example.com/cart?utm_source=mailwave&utm_medium=email&utm_campaign=cart-recovery-a",
+			footerText:  "Vous recevez cet e-mail car vous avez commencé une commande sur notre boutique.<br><a href=\"{{unsubscribe_url}}\">Se désabonner</a> | <a href=\"https://demo.example.com\">Visiter la boutique</a>",
 		},
 		"es": {
 			lang:        "es",
@@ -149,8 +149,8 @@ func getCartRecoveryAContents() map[string]automationEmailContents {
 			heading:     "¿Todavía lo estás pensando? 🛒",
 			mainContent: "Hola {{contact.first_name}},<br><br>Tu carrito sigue guardado, tal y como lo dejaste. Todos los pedidos incluyen envío gratuito en dos días, un año de garantía y 90 días de soporte técnico sin coste.<br><br>¿Quieres entregar tu dispositivo actual? Puedes aplicar su valor al finalizar la compra y ver el nuevo precio al instante.",
 			buttonText:  "Volver a mi carrito",
-			buttonHref:  "https://demo.mailwave.com/cart?utm_source=mailwave&utm_medium=email&utm_campaign=cart-recovery-a",
-			footerText:  "Recibes este correo porque iniciaste un pedido en nuestra tienda.<br><a href=\"{{unsubscribe_url}}\">Cancelar suscripción</a> | <a href=\"https://demo.mailwave.com\">Visitar la tienda</a>",
+			buttonHref:  "https://demo.example.com/cart?utm_source=mailwave&utm_medium=email&utm_campaign=cart-recovery-a",
+			footerText:  "Recibes este correo porque iniciaste un pedido en nuestra tienda.<br><a href=\"{{unsubscribe_url}}\">Cancelar suscripción</a> | <a href=\"https://demo.example.com\">Visitar la tienda</a>",
 		},
 	}
 }
@@ -164,8 +164,8 @@ func getCartRecoveryBContents() map[string]automationEmailContents {
 			heading:     "Here's 10% off to finish up 🎁",
 			mainContent: "Hi {{contact.first_name}},<br><br>Your cart is still saved — and so is a little something extra. Use the code <strong>APPLE10</strong> at checkout for 10% off your order.<br><br>The code is valid for the next 48 hours and works on everything still in your cart, accessories included.",
 			buttonText:  "Claim My 10% Off",
-			buttonHref:  "https://demo.mailwave.com/cart?promo=APPLE10&utm_source=mailwave&utm_medium=email&utm_campaign=cart-recovery-b",
-			footerText:  "You received this email because you started an order on our store.<br><a href=\"{{unsubscribe_url}}\">Unsubscribe</a> | <a href=\"https://demo.mailwave.com\">Visit the store</a>",
+			buttonHref:  "https://demo.example.com/cart?promo=APPLE10&utm_source=mailwave&utm_medium=email&utm_campaign=cart-recovery-b",
+			footerText:  "You received this email because you started an order on our store.<br><a href=\"{{unsubscribe_url}}\">Unsubscribe</a> | <a href=\"https://demo.example.com\">Visit the store</a>",
 		},
 		"fr": {
 			lang:        "fr",
@@ -174,8 +174,8 @@ func getCartRecoveryBContents() map[string]automationEmailContents {
 			heading:     "Voici 10 % de remise pour conclure 🎁",
 			mainContent: "Bonjour {{contact.first_name}},<br><br>Votre panier est toujours enregistré — et un petit plus vous attend. Utilisez le code <strong>APPLE10</strong> au moment du paiement pour bénéficier de 10 % de remise.<br><br>Le code est valable 48 heures et s'applique à tout ce qui se trouve dans votre panier, accessoires compris.",
 			buttonText:  "Profiter des 10 %",
-			buttonHref:  "https://demo.mailwave.com/cart?promo=APPLE10&utm_source=mailwave&utm_medium=email&utm_campaign=cart-recovery-b",
-			footerText:  "Vous recevez cet e-mail car vous avez commencé une commande sur notre boutique.<br><a href=\"{{unsubscribe_url}}\">Se désabonner</a> | <a href=\"https://demo.mailwave.com\">Visiter la boutique</a>",
+			buttonHref:  "https://demo.example.com/cart?promo=APPLE10&utm_source=mailwave&utm_medium=email&utm_campaign=cart-recovery-b",
+			footerText:  "Vous recevez cet e-mail car vous avez commencé une commande sur notre boutique.<br><a href=\"{{unsubscribe_url}}\">Se désabonner</a> | <a href=\"https://demo.example.com\">Visiter la boutique</a>",
 		},
 		"es": {
 			lang:        "es",
@@ -184,8 +184,8 @@ func getCartRecoveryBContents() map[string]automationEmailContents {
 			heading:     "Un 10 % de descuento para terminar 🎁",
 			mainContent: "Hola {{contact.first_name}},<br><br>Tu carrito sigue guardado, y además te hemos reservado algo. Usa el código <strong>APPLE10</strong> al finalizar la compra y obtén un 10 % de descuento.<br><br>El código es válido durante 48 horas y se aplica a todo lo que hay en tu carrito, accesorios incluidos.",
 			buttonText:  "Aprovechar el 10 %",
-			buttonHref:  "https://demo.mailwave.com/cart?promo=APPLE10&utm_source=mailwave&utm_medium=email&utm_campaign=cart-recovery-b",
-			footerText:  "Recibes este correo porque iniciaste un pedido en nuestra tienda.<br><a href=\"{{unsubscribe_url}}\">Cancelar suscripción</a> | <a href=\"https://demo.mailwave.com\">Visitar la tienda</a>",
+			buttonHref:  "https://demo.example.com/cart?promo=APPLE10&utm_source=mailwave&utm_medium=email&utm_campaign=cart-recovery-b",
+			footerText:  "Recibes este correo porque iniciaste un pedido en nuestra tienda.<br><a href=\"{{unsubscribe_url}}\">Cancelar suscripción</a> | <a href=\"https://demo.example.com\">Visitar la tienda</a>",
 		},
 	}
 }
@@ -199,7 +199,7 @@ func getOrderThankYouContents() map[string]automationEmailContents {
 			heading:     "Thank you for your order! 🎉",
 			mainContent: "Hi {{contact.first_name}},<br><br>Your order is confirmed and already being prepared. You'll get a tracking number as soon as it leaves our warehouse.<br><br>One more thing: this purchase moves you into our <strong>VIP Club</strong>. That means early access to new releases, priority technical support, and free personal setup sessions whenever you need them.",
 			buttonText:  "Track My Order",
-			buttonHref:  "https://demo.mailwave.com/orders?utm_source=mailwave&utm_medium=email&utm_campaign=order-thank-you",
+			buttonHref:  "https://demo.example.com/orders?utm_source=mailwave&utm_medium=email&utm_campaign=order-thank-you",
 			footerText:  "This is a transactional message about an order you placed.<br>Questions? Reply to this email and our team will help.",
 		},
 		"fr": {
@@ -209,7 +209,7 @@ func getOrderThankYouContents() map[string]automationEmailContents {
 			heading:     "Merci pour votre commande ! 🎉",
 			mainContent: "Bonjour {{contact.first_name}},<br><br>Votre commande est confirmée et déjà en préparation. Vous recevrez un numéro de suivi dès son départ de notre entrepôt.<br><br>Autre bonne nouvelle : cet achat vous fait entrer dans notre <strong>Club VIP</strong>. Vous bénéficiez d'un accès anticipé aux nouveautés, d'une assistance technique prioritaire et de séances de configuration personnalisées offertes.",
 			buttonText:  "Suivre ma commande",
-			buttonHref:  "https://demo.mailwave.com/orders?utm_source=mailwave&utm_medium=email&utm_campaign=order-thank-you",
+			buttonHref:  "https://demo.example.com/orders?utm_source=mailwave&utm_medium=email&utm_campaign=order-thank-you",
 			footerText:  "Ceci est un message transactionnel concernant une commande que vous avez passée.<br>Une question ? Répondez à cet e-mail et notre équipe vous aidera.",
 		},
 		"es": {
@@ -219,7 +219,7 @@ func getOrderThankYouContents() map[string]automationEmailContents {
 			heading:     "¡Gracias por tu pedido! 🎉",
 			mainContent: "Hola {{contact.first_name}},<br><br>Tu pedido está confirmado y ya lo estamos preparando. Recibirás un número de seguimiento en cuanto salga de nuestro almacén.<br><br>Una cosa más: esta compra te da entrada a nuestro <strong>Club VIP</strong>, con acceso anticipado a las novedades, soporte técnico prioritario y sesiones de configuración personalizadas sin coste.",
 			buttonText:  "Seguir mi pedido",
-			buttonHref:  "https://demo.mailwave.com/orders?utm_source=mailwave&utm_medium=email&utm_campaign=order-thank-you",
+			buttonHref:  "https://demo.example.com/orders?utm_source=mailwave&utm_medium=email&utm_campaign=order-thank-you",
 			footerText:  "Este es un mensaje transaccional sobre un pedido que has realizado.<br>¿Alguna duda? Responde a este correo y nuestro equipo te ayudará.",
 		},
 	}
@@ -234,8 +234,8 @@ func getWinbackOfferContents() map[string]automationEmailContents {
 			heading:     "We miss you, {{contact.first_name}} 👋",
 			mainContent: "It's been a while, and quite a lot has landed since your last order: a new iPhone lineup, faster MacBooks and the latest Apple Watch.<br><br>To make coming back easy, here's <strong>$50 off</strong> your next order over $499, plus free two-day delivery. No code needed — the discount is already attached to your account.",
 			buttonText:  "See What's New",
-			buttonHref:  "https://demo.mailwave.com/store?utm_source=mailwave&utm_medium=email&utm_campaign=winback-offer",
-			footerText:  "You received this email because you shopped with us before.<br><a href=\"{{unsubscribe_url}}\">Unsubscribe</a> | <a href=\"https://demo.mailwave.com\">Visit the store</a>",
+			buttonHref:  "https://demo.example.com/store?utm_source=mailwave&utm_medium=email&utm_campaign=winback-offer",
+			footerText:  "You received this email because you shopped with us before.<br><a href=\"{{unsubscribe_url}}\">Unsubscribe</a> | <a href=\"https://demo.example.com\">Visit the store</a>",
 		},
 		"fr": {
 			lang:        "fr",
@@ -244,8 +244,8 @@ func getWinbackOfferContents() map[string]automationEmailContents {
 			heading:     "Vous nous manquez, {{contact.first_name}} 👋",
 			mainContent: "Cela fait un moment, et beaucoup de nouveautés sont arrivées depuis votre dernière commande : une nouvelle gamme d'iPhone, des MacBook plus rapides et la dernière Apple Watch.<br><br>Pour faciliter votre retour, voici <strong>50 € de remise</strong> dès 499 € d'achat, ainsi que la livraison offerte en deux jours. Aucun code n'est nécessaire : la remise est déjà associée à votre compte.",
 			buttonText:  "Découvrir les nouveautés",
-			buttonHref:  "https://demo.mailwave.com/store?utm_source=mailwave&utm_medium=email&utm_campaign=winback-offer",
-			footerText:  "Vous recevez cet e-mail car vous avez déjà commandé chez nous.<br><a href=\"{{unsubscribe_url}}\">Se désabonner</a> | <a href=\"https://demo.mailwave.com\">Visiter la boutique</a>",
+			buttonHref:  "https://demo.example.com/store?utm_source=mailwave&utm_medium=email&utm_campaign=winback-offer",
+			footerText:  "Vous recevez cet e-mail car vous avez déjà commandé chez nous.<br><a href=\"{{unsubscribe_url}}\">Se désabonner</a> | <a href=\"https://demo.example.com\">Visiter la boutique</a>",
 		},
 		"es": {
 			lang:        "es",
@@ -254,8 +254,8 @@ func getWinbackOfferContents() map[string]automationEmailContents {
 			heading:     "Te echamos de menos, {{contact.first_name}} 👋",
 			mainContent: "Ha pasado un tiempo y han llegado muchas novedades desde tu último pedido: una nueva gama de iPhone, MacBook más rápidos y el último Apple Watch.<br><br>Para ponértelo fácil, aquí tienes <strong>50 € de descuento</strong> en pedidos superiores a 499 €, con envío gratuito en dos días. No necesitas ningún código: el descuento ya está asociado a tu cuenta.",
 			buttonText:  "Ver las novedades",
-			buttonHref:  "https://demo.mailwave.com/store?utm_source=mailwave&utm_medium=email&utm_campaign=winback-offer",
-			footerText:  "Recibes este correo porque ya has comprado con nosotros.<br><a href=\"{{unsubscribe_url}}\">Cancelar suscripción</a> | <a href=\"https://demo.mailwave.com\">Visitar la tienda</a>",
+			buttonHref:  "https://demo.example.com/store?utm_source=mailwave&utm_medium=email&utm_campaign=winback-offer",
+			footerText:  "Recibes este correo porque ya has comprado con nosotros.<br><a href=\"{{unsubscribe_url}}\">Cancelar suscripción</a> | <a href=\"https://demo.example.com\">Visitar la tienda</a>",
 		},
 	}
 }

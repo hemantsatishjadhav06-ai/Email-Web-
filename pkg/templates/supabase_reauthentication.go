@@ -474,7 +474,7 @@ func CreateSupabaseReauthenticationEmailStructure() (mailwave_mjml.EmailBlock, e
                           "paddingLeft": "25px",
                           "backgroundColor": "transparent"
                         },
-                        "content": "<p>Please do not reply to this email.<br>Need help? visit help center or contact us.<br>12 Heaven Road | San Francisco CA<br>Powered by <a class=\"editor-link\" href=\"https://www.mailwave.com\">Mailwave</a></p>"
+                        "content": "<p>Please do not reply to this email.<br>Need help? visit help center or contact us.<br>12 Heaven Road | San Francisco CA<br>Powered by <a class=\"editor-link\" href=\"https://mailwave-production-72a7.up.railway.app\">Mailwave</a></p>"
                       },
                       {
                         "id": "31cc03f4-74b6-4333-ad9f-0bb913ae93ee",

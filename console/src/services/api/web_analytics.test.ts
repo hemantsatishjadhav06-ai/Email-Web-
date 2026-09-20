@@ -18,15 +18,15 @@ describe('resolveTrackingEndpoint', () => {
   afterEach(() => setApiEndpoint(undefined))
 
   it('prefers the workspace custom endpoint', () => {
-    setApiEndpoint('https://api.mailwave.com')
+    setApiEndpoint('https://api.example.com')
     expect(
       resolveTrackingEndpoint({ settings: { custom_endpoint_url: 'https://a.example.com' } })
     ).toBe('https://a.example.com')
   })
 
   it('falls back to the API host, trimming trailing slashes and spaces', () => {
-    setApiEndpoint('  https://api.mailwave.com//  ')
-    expect(resolveTrackingEndpoint({ settings: {} })).toBe('https://api.mailwave.com')
+    setApiEndpoint('  https://api.example.com//  ')
+    expect(resolveTrackingEndpoint({ settings: {} })).toBe('https://api.example.com')
   })
 
   it('falls back to the current origin when nothing is configured', () => {

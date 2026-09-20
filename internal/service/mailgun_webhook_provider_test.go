@@ -25,13 +25,13 @@ func TestMailgunService_RegisterWebhooks(t *testing.T) {
 	mockAuthService := mocks.NewMockAuthService(ctrl)
 	mockLogger := pkgmocks.NewMockLogger(ctrl)
 
-	webhookEndpoint := "https://api.mailwave.com/webhooks"
+	webhookEndpoint := "https://api.example.com/webhooks"
 	service := NewMailgunService(mockHTTPClient, mockAuthService, mockLogger, webhookEndpoint)
 
 	ctx := context.Background()
 	workspaceID := "workspace123"
 	integrationID := "integration456"
-	baseURL := "https://api.mailwave.com"
+	baseURL := "https://api.example.com"
 	eventTypes := []domain.EmailEventType{
 		domain.EmailEventDelivered,
 		domain.EmailEventBounce,
@@ -71,7 +71,7 @@ func TestMailgunService_RegisterWebhooks(t *testing.T) {
 		createResponse := `{
 			"message": "Webhook has been created",
 			"webhook": {
-				"url": "https://api.mailwave.com/webhooks/email?provider=mailgun&workspace_id=workspace123&integration_id=integration456"
+				"url": "https://api.example.com/webhooks/email?provider=mailgun&workspace_id=workspace123&integration_id=integration456"
 			}
 		}`
 
@@ -218,7 +218,7 @@ func TestMailgunService_GetWebhookStatus(t *testing.T) {
 	mockAuthService := mocks.NewMockAuthService(ctrl)
 	mockLogger := pkgmocks.NewMockLogger(ctrl)
 
-	webhookEndpoint := "https://api.mailwave.com/webhooks"
+	webhookEndpoint := "https://api.example.com/webhooks"
 	service := NewMailgunService(mockHTTPClient, mockAuthService, mockLogger, webhookEndpoint)
 
 	ctx := context.Background()
@@ -237,7 +237,7 @@ func TestMailgunService_GetWebhookStatus(t *testing.T) {
 		}
 
 		// Mock list webhooks response with registered webhooks
-		webhookURL := "https://api.mailwave.com/webhooks/email?provider=mailgun&workspace_id=workspace123&integration_id=integration456"
+		webhookURL := "https://api.example.com/webhooks/email?provider=mailgun&workspace_id=workspace123&integration_id=integration456"
 		listResponse := `{
 			"webhooks": {
 				"delivered": {
@@ -290,7 +290,7 @@ func TestMailgunService_GetWebhookStatus(t *testing.T) {
 		}
 		emptyWebhooks := `{"webhooks":{"delivered":{"urls":[]},"permanent_fail":{"urls":[]},"temporary_fail":{"urls":[]},"complained":{"urls":[]}}}`
 		// A route forwarding inbound mail to this integration's endpoint.
-		fwd := fmt.Sprintf(`forward(\"https://api.mailwave.com/webhooks/email/inbound?workspace_id=%s&integration_id=%s\")`, workspaceID, integrationID)
+		fwd := fmt.Sprintf(`forward(\"https://api.example.com/webhooks/email/inbound?workspace_id=%s&integration_id=%s\")`, workspaceID, integrationID)
 		routes := fmt.Sprintf(`{"total_count":1,"items":[{"id":"r1","actions":["%s","stop()"]}]}`, fwd)
 
 		mockHTTPClient.EXPECT().Do(gomock.Any()).DoAndReturn(func(req *http.Request) (*http.Response, error) {
@@ -425,7 +425,7 @@ func TestMailgunService_UnregisterWebhooks(t *testing.T) {
 	mockAuthService := mocks.NewMockAuthService(ctrl)
 	mockLogger := pkgmocks.NewMockLogger(ctrl)
 
-	webhookEndpoint := "https://api.mailwave.com/webhooks"
+	webhookEndpoint := "https://api.example.com/webhooks"
 	service := NewMailgunService(mockHTTPClient, mockAuthService, mockLogger, webhookEndpoint)
 
 	ctx := context.Background()
@@ -444,10 +444,10 @@ func TestMailgunService_UnregisterWebhooks(t *testing.T) {
 			Mailgun: &domain.MailgunSettings{Domain: "example.com", APIKey: "test-api-key", Region: "US"},
 		}
 
-		webhookURL := "https://api.mailwave.com/webhooks/email?provider=mailgun&workspace_id=workspace123&integration_id=integration456"
+		webhookURL := "https://api.example.com/webhooks/email?provider=mailgun&workspace_id=workspace123&integration_id=integration456"
 		listResponse := `{"webhooks":{"delivered":{"urls":["` + webhookURL + `"]},"permanent_fail":{"urls":["` + webhookURL + `"]},"temporary_fail":{"urls":[]},"complained":{"urls":["` + webhookURL + `"]}}}`
 		// A routes list containing OUR inbound reply route, so unregister must delete it.
-		fwd := `forward(\"https://api.mailwave.com/webhooks/email/inbound?workspace_id=workspace123&integration_id=integration456\")`
+		fwd := `forward(\"https://api.example.com/webhooks/email/inbound?workspace_id=workspace123&integration_id=integration456\")`
 		routesBody := fmt.Sprintf(`{"total_count":1,"items":[{"id":"route-1","actions":["%s","stop()"]}]}`, fwd)
 
 		deletedEvents := map[string]bool{}
@@ -555,7 +555,7 @@ func TestMailgunService_UnregisterWebhooks(t *testing.T) {
 			Kind:    domain.EmailProviderKindMailgun,
 			Mailgun: &domain.MailgunSettings{Domain: "example.com", APIKey: "test-api-key", Region: "US"},
 		}
-		webhookURL := "https://api.mailwave.com/webhooks/email?provider=mailgun&workspace_id=workspace123&integration_id=integration456"
+		webhookURL := "https://api.example.com/webhooks/email?provider=mailgun&workspace_id=workspace123&integration_id=integration456"
 		listResponse := `{"webhooks":{"delivered":{"urls":["` + webhookURL + `"]},"permanent_fail":{"urls":[]},"temporary_fail":{"urls":[]},"complained":{"urls":[]}}}`
 
 		httpClient.EXPECT().Do(gomock.Any()).DoAndReturn(func(req *http.Request) (*http.Response, error) {
@@ -629,7 +629,7 @@ func TestMailgunService_TestWebhook(t *testing.T) {
 	mockAuthService := mocks.NewMockAuthService(ctrl)
 	mockLogger := pkgmocks.NewMockLogger(ctrl)
 
-	webhookEndpoint := "https://api.mailwave.com/webhooks"
+	webhookEndpoint := "https://api.example.com/webhooks"
 	service := NewMailgunService(mockHTTPClient, mockAuthService, mockLogger, webhookEndpoint)
 
 	ctx := context.Background()

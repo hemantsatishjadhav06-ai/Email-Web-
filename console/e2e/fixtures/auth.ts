@@ -69,16 +69,16 @@ async function setupApiMocks(page: Page, config: MockConfig = {}) {
       status: 200,
       contentType: 'application/javascript',
       body: `
-        window.API_URL = "https://localapi.mailwave.com:4000";
+        window.API_URL = "https://localapi.example.com:4000";
         window.ROOT_EMAIL = "test@example.com";
         window.IS_INSTALLED = true;
       `
     })
   )
 
-  // Intercept all requests to the API backend (localapi.mailwave.com:4000)
+  // Intercept all requests to the API backend (localapi.example.com:4000)
   // Only intercept XHR/fetch requests, not script/module requests
-  await page.route('https://localapi.mailwave.com:4000/**', async (route: Route) => {
+  await page.route('https://localapi.example.com:4000/**', async (route: Route) => {
     const url = route.request().url()
     const method = route.request().method()
     const resourceType = route.request().resourceType()

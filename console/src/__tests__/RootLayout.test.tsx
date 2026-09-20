@@ -97,14 +97,14 @@ describe('RootLayout', () => {
     ;(window as unknown as { location: Location }).location = {
       ...originalLocation,
       pathname: '/console/',
-      search: '?email=demo@mailwave.com',
-      href: 'http://localhost:3000/console/?email=demo@mailwave.com'
+      search: '?email=demo@example.com',
+      href: 'http://localhost:3000/console/?email=demo@example.com'
     } as Location
 
     render(<RootLayout />)
     expect(mockNavigate).toHaveBeenCalledWith({
       to: '/console/signin',
-      search: { email: 'demo@mailwave.com' },
+      search: { email: 'demo@example.com' },
       replace: true
     })
   })
@@ -125,8 +125,8 @@ describe('RootLayout', () => {
     ;(window as unknown as { location: Location }).location = {
       ...originalLocation,
       pathname: '/console/signin',
-      search: '?email=demo@mailwave.com',
-      href: 'http://localhost:3000/console/signin?email=demo@mailwave.com'
+      search: '?email=demo@example.com',
+      href: 'http://localhost:3000/console/signin?email=demo@example.com'
     } as Location
 
     render(<RootLayout />)

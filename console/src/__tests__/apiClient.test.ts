@@ -46,7 +46,7 @@ describe('api client 401 handling', () => {
   // here would rewrite the URL to a bare /console/signin and throw the email away,
   // so the visitor would land on an empty form and only succeed on a second try.
   it('keeps the sign-in URL and its search params when a 401 arrives on the sign-in page', async () => {
-    goTo('/console/signin?email=demo@mailwave.com')
+    goTo('/console/signin?email=demo@example.com')
     vi.stubGlobal(
       'fetch',
       vi.fn().mockResolvedValue(jsonResponse(401, { error: 'Session expired or invalid' }))
@@ -56,7 +56,7 @@ describe('api client 401 handling', () => {
 
     expect(navigate).not.toHaveBeenCalled()
     expect(window.location.pathname).toBe('/console/signin')
-    expect(window.location.search).toBe('?email=demo@mailwave.com')
+    expect(window.location.search).toBe('?email=demo@example.com')
     expect(localStorage.getItem('auth_token')).toBeNull()
   })
 
@@ -74,7 +74,7 @@ describe('api client 401 handling', () => {
   })
 
   it('leaves the session alone for non-auth failures', async () => {
-    goTo('/console/signin?email=demo@mailwave.com')
+    goTo('/console/signin?email=demo@example.com')
     vi.stubGlobal(
       'fetch',
       vi.fn().mockResolvedValue(jsonResponse(500, { error: 'Failed to verify session' }))
@@ -192,7 +192,7 @@ describe('api client licence refusals', () => {
     feature: 'ses_tenant',
     required_tier: 'Studio',
     message: 'SES tenant isolation requires a Mailwave licence (Studio or above).',
-    docs: 'https://mailwave.com/licence-features'
+    docs: 'https://example.com/licence-features'
   }
 
   it('names the capability instead of showing the wire code', async () => {
@@ -219,7 +219,7 @@ describe('api client licence refusals', () => {
           error: 'license_required',
           feature: 'workspaces',
           message: 'workspace quota reached: 3 workspaces exist (limit: 3)',
-          docs: 'https://mailwave.com/licence-features'
+          docs: 'https://example.com/licence-features'
         })
       )
     )
@@ -240,7 +240,7 @@ describe('api client licence refusals', () => {
           error: 'license_required',
           feature: 'a_capability_from_2028',
           message: 'That capability requires a Mailwave licence.',
-          docs: 'https://mailwave.com/licence-features'
+          docs: 'https://example.com/licence-features'
         })
       )
     )

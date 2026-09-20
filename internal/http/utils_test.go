@@ -654,7 +654,7 @@ func TestLicenseRefusalIsPaymentRequired(t *testing.T) {
 				assert.Equal(t, "license_required", body["error"])
 				assert.Equal(t, tc.feature, body["feature"])
 				assert.Equal(t, tc.message, body["message"])
-				assert.Equal(t, "https://mailwave.com/licence-features", body["docs"])
+				assert.Equal(t, "https://example.com/licence-features", body["docs"])
 
 				if tc.tierAbsent {
 					assert.NotContains(t, body, "required_tier",
@@ -686,7 +686,7 @@ func TestLicenseRefusalBodyIsMachineReadable(t *testing.T) {
 	// URL and by the version of the software being run. It is also why no endpoint
 	// here serves the feature matrix: a second copy would drift from the text that
 	// is legally binding.
-	assert.Equal(t, "https://mailwave.com/licence-features", body["docs"])
+	assert.Equal(t, "https://example.com/licence-features", body["docs"])
 	assert.Equal(t, string(domain.FeatureSSO), body["feature"])
 }
 

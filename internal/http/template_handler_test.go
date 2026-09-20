@@ -1180,7 +1180,7 @@ func TestTemplateHandler_LicenceRefusalIsA402(t *testing.T) {
 		assert.Equal(t, string(domain.FeatureTemplateI18n), body["feature"])
 		assert.Equal(t, "Studio", body["required_tier"])
 		assert.Contains(t, body["message"], "Template translations")
-		assert.Equal(t, "https://mailwave.com/licence-features", body["docs"])
+		assert.Equal(t, "https://example.com/licence-features", body["docs"])
 	}
 
 	t.Run("templates.create", func(t *testing.T) {

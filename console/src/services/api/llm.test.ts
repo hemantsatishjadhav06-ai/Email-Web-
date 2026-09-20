@@ -62,7 +62,7 @@ describe('llmApi.streamChat error handling', () => {
       feature: 'ses_tenant',
       required_tier: 'Studio',
       message: 'SES tenant isolation requires a Mailwave licence (Studio or above).',
-      docs: 'https://mailwave.com/licence-features'
+      docs: 'https://example.com/licence-features'
     })
 
     const error = await errorFrom()

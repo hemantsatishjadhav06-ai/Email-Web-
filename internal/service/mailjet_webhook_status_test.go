@@ -90,7 +90,7 @@ func TestMailjetService_GetWebhookStatus(t *testing.T) {
 		registeredService := NewMailjetService(mockRegisteredClient, mockAuthService, testLogger)
 
 		// Create webhook URL that includes workspace_id and integration_id
-		webhookURL := domain.GenerateWebhookCallbackURL("https://api.mailwave.com", domain.EmailProviderKindMailjet, workspaceID, integrationID)
+		webhookURL := domain.GenerateWebhookCallbackURL("https://api.example.com", domain.EmailProviderKindMailjet, workspaceID, integrationID)
 
 		// Setup mock for ListWebhooks - return list with webhooks for this integration
 		mockRegisteredClient.EXPECT().

@@ -191,7 +191,7 @@ func TestSESHandler_EnableTenantIsolation(t *testing.T) {
 		assert.Equal(t, string(domain.FeatureSESTenant), body["feature"])
 		assert.Equal(t, "Studio", body["required_tier"])
 		assert.NotEmpty(t, body["message"])
-		assert.Equal(t, "https://mailwave.com/licence-features", body["docs"])
+		assert.Equal(t, "https://example.com/licence-features", body["docs"])
 	})
 
 	// Services wrap on the way up, and a bare type assertion here would degrade a wrapped

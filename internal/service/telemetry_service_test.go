@@ -198,7 +198,7 @@ func TestTelemetryService_StartDailyScheduler(t *testing.T) {
 
 func TestTelemetryService_HardcodedEndpoint(t *testing.T) {
 	// Verify that the hardcoded endpoint is used
-	assert.Equal(t, "https://telemetry.mailwave.com", TelemetryEndpoint)
+	assert.Equal(t, "https://telemetry.example.com", TelemetryEndpoint)
 }
 
 func TestTelemetryService_SetNonEmailIntegrationFlags(t *testing.T) {

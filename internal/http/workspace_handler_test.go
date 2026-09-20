@@ -4224,7 +4224,7 @@ func TestWorkspaceHandler_HandleCreateAPIKey_LicenceRefusalIs402(t *testing.T) {
 		assert.Equal(t, string(domain.FeatureRBAC), response["feature"])
 		assert.Equal(t, "Studio", response["required_tier"])
 		assert.NotEmpty(t, response["message"])
-		assert.Equal(t, "https://mailwave.com/licence-features", response["docs"])
+		assert.Equal(t, "https://example.com/licence-features", response["docs"])
 	})
 
 	// Services wrap on the way up, and a bare type assertion here would have degraded a
@@ -4307,7 +4307,7 @@ func TestWorkspaceHandler_HandleCreate_QuotaRefusalIs402(t *testing.T) {
 		assert.Empty(t, response["required_tier"])
 		// The number is what makes the refusal actionable rather than a slogan.
 		assert.Contains(t, response["message"], "3")
-		assert.Equal(t, "https://mailwave.com/licence-features", response["docs"])
+		assert.Equal(t, "https://example.com/licence-features", response["docs"])
 	})
 
 	// The contrast that gives the test its teeth, and the distinction the whole 402/403 split

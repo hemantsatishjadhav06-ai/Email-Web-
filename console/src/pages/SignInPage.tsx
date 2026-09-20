@@ -168,7 +168,7 @@ export function SignInPage() {
       emailToUse = search.email
     } else if ((window as unknown as Record<string, unknown>).demo === true) {
       // Demo mode fallback
-      emailToUse = 'demo@mailwave.com'
+      emailToUse = 'demo@example.com'
     }
 
     if (emailToUse) {

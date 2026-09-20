@@ -11,7 +11,7 @@ import {
 const { Text } = Typography;
 
 export const ZAPIER_DOCUMENTATION_URL =
-  "https://docs.mailwave.com/integrations/zapier";
+  "https://github.com/hemantsatishjadhav06-ai/Email-Web-#readme";
 
 /**
  * What the label field is seeded with on a fresh connection.

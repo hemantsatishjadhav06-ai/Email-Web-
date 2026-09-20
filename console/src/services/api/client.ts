@@ -79,7 +79,7 @@ async function fetchWithAuth(
   };
   let defaultOrigin = window.location.origin;
   if (defaultOrigin.includes("mailwavedev.com")) {
-    defaultOrigin = "https://localapi.mailwave.com:4000";
+    defaultOrigin = "https://localapi.example.com:4000";
   }
   const apiEndpoint =
     window.API_ENDPOINT?.trim().replace(/\/+$/, "") || defaultOrigin;

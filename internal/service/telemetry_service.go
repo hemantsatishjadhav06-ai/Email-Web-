@@ -125,7 +125,7 @@ type TelemetryMetrics struct {
 
 const (
 	// TelemetryEndpoint is the hardcoded endpoint for sending telemetry data
-	TelemetryEndpoint = "https://telemetry.mailwave.com"
+	TelemetryEndpoint = "https://telemetry.example.com"
 
 	// WebAnalyticsActiveDays is how recently a workspace must have recorded a
 	// web analytics session to count as using the feature. Wide enough that a

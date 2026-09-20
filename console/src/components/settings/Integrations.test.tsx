@@ -45,7 +45,7 @@ vi.mock('../../services/api/workspace', () => ({
   }
 }))
 
-const ZAPIER_KEY_EMAIL = 'zapier-marketing-3f9a1c02@api.mailwave.com'
+const ZAPIER_KEY_EMAIL = 'zapier-marketing-3f9a1c02@api.example.com'
 
 const zapierIntegration = {
   id: 'int_zapier_1',

@@ -42,13 +42,13 @@ export default defineConfig({
     https: devHttps(),
     proxy: {
       '/config.js': {
-        target: 'https://localapi.mailwave.com:4000',
+        target: 'https://localapi.example.com:4000',
         changeOrigin: true,
         secure: false,
         rewrite: (path) => path.replace(/^\/console/, '')
       },
       '/console/config.js': {
-        target: 'https://localapi.mailwave.com:4000',
+        target: 'https://localapi.example.com:4000',
         changeOrigin: true,
         secure: false,
         rewrite: (path) => path.replace(/^\/console/, '')

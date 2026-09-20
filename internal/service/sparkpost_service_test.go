@@ -251,7 +251,7 @@ func TestSparkPostService_GetWebhookStatus(t *testing.T) {
 		ctx := context.Background()
 
 		// Mock list webhooks response with a matching webhook
-		webhookTarget := "https://api.mailwave.com/webhook?provider=sparkpost&workspace_id=workspace-123&integration_id=integration-123"
+		webhookTarget := "https://api.example.com/webhook?provider=sparkpost&workspace_id=workspace-123&integration_id=integration-123"
 		listResponse := domain.SparkPostWebhookListResponse{
 			Results: []domain.SparkPostWebhook{
 				{
@@ -374,7 +374,7 @@ func TestSparkPostService_RegisterWebhooks(t *testing.T) {
 
 	workspaceID := "workspace-123"
 	integrationID := "integration-123"
-	baseURL := "https://api.mailwave.com/webhook"
+	baseURL := "https://api.example.com/webhook"
 	eventTypes := []domain.EmailEventType{domain.EmailEventDelivered, domain.EmailEventBounce}
 
 	t.Run("Success - Create new webhook", func(t *testing.T) {
@@ -495,7 +495,7 @@ func TestSparkPostService_UnregisterWebhooks(t *testing.T) {
 		ctx := context.Background()
 
 		// Mock list webhooks response with a matching webhook
-		webhookTarget := "https://api.mailwave.com/webhook?provider=sparkpost&workspace_id=workspace-123&integration_id=integration-123"
+		webhookTarget := "https://api.example.com/webhook?provider=sparkpost&workspace_id=workspace-123&integration_id=integration-123"
 		listResponse := domain.SparkPostWebhookListResponse{
 			Results: []domain.SparkPostWebhook{
 				{

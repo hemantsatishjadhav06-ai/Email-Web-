@@ -86,12 +86,12 @@ export const LICENSE_REQUIRED_TIER: Record<LicenseFeature, string> = {
 // The page the Additional Use Grant pins by URL. Restated from internal/http/utils.go, which
 // this bundle cannot import; the two must stay identical, and neither may change without the
 // other — a v40 binary carries this URL in the `docs` field of every 402 it ever answers.
-export const LICENSE_DOCS_URL = 'https://mailwave.com/licence-features'
+export const LICENSE_DOCS_URL = 'https://github.com/hemantsatishjadhav06-ai/Email-Web-#readme'
 
 // Where a SELF-HOSTED licence is bought, which is not the same page as the Cloud plans. It
 // used to point at /pricing: an operator refused a capability clicked "Buy a licence" and
 // landed on monthly SaaS tiers that sell none of what they were just refused.
-export const LICENSE_PRICING_URL = 'https://mailwave.com/pricing/self-hosted'
+export const LICENSE_PRICING_URL = 'https://github.com/hemantsatishjadhav06-ai/Email-Web-#readme'
 
 /**
  * Whether the deployment holds a key that is still current, counting the grace period.

@@ -57,7 +57,7 @@ func TestNewFactory(t *testing.T) {
 				mockDataFeedFetcher,
 				mockLogger,
 				tt.config,
-				"https://api.mailwave.com",
+				"https://api.example.com",
 				mockEventBus,
 				false, // useQueueSender
 			)
@@ -111,7 +111,7 @@ func TestFactory_CreateMessageSender(t *testing.T) {
 		mockDataFeedFetcher,
 		mockLogger,
 		config,
-		"https://api.mailwave.com",
+		"https://api.example.com",
 		mockEventBus,
 		false, // useQueueSender
 	)
@@ -155,7 +155,7 @@ func TestFactory_CreateOrchestrator(t *testing.T) {
 		mockDataFeedFetcher,
 		mockLogger,
 		config,
-		"https://api.mailwave.com",
+		"https://api.example.com",
 		mockEventBus,
 		false, // useQueueSender
 	)
@@ -204,7 +204,7 @@ func TestFactory_RegisterWithTaskService(t *testing.T) {
 		mockDataFeedFetcher,
 		mockLogger,
 		config,
-		"https://api.mailwave.com",
+		"https://api.example.com",
 		mockEventBus,
 		false, // useQueueSender
 	)

@@ -14,7 +14,7 @@ import (
 // DNSVerificationService handles DNS verification for custom domains
 type DNSVerificationService struct {
 	logger         logger.Logger
-	expectedTarget string // The CNAME target (e.g., "mailwave.com" or your main domain)
+	expectedTarget string // The CNAME target (e.g., "example.com" or your main domain)
 }
 
 // NewDNSVerificationService creates a new DNS verification service
@@ -108,7 +108,7 @@ func (s *DNSVerificationService) VerifyDomainOwnership(ctx context.Context, doma
 
 // verifyARecord verifies domain ownership via A record by comparing IP addresses
 func (s *DNSVerificationService) verifyARecord(ctx context.Context, hostname, expectedTarget string) error {
-	// Extract hostname from expectedTarget (it might be a URL like https://preview.mailwave.com)
+	// Extract hostname from expectedTarget (it might be a URL like https://preview.example.com)
 	expectedTargetHostname, err := extractHostname(expectedTarget)
 	if err != nil {
 		return domain.ValidationError{

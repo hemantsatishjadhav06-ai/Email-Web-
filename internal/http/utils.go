@@ -119,7 +119,7 @@ func writePermissionError(w http.ResponseWriter, err error) bool {
 // contract with it as much as with the AUG.
 const (
 	licenseRequiredCode = "license_required"
-	licenseDocsURL      = "https://mailwave.com/licence-features"
+	licenseDocsURL      = "https://github.com/hemantsatishjadhav06-ai/Email-Web-#readme"
 
 	// licenseQuotaFeature stands in for a domain.Feature the workspace ceiling does
 	// not have: the quota travels in the key's max_ws field, not as an entry in its

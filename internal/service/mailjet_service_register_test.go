@@ -28,7 +28,7 @@ func TestMailjetService_RegisterWebhooks_Success(t *testing.T) {
 	// Test data
 	workspaceID := "workspace-123"
 	integrationID := "integration-456"
-	baseURL := "https://api.mailwave.com"
+	baseURL := "https://api.example.com"
 
 	providerConfig := &domain.EmailProvider{
 		Kind: domain.EmailProviderKindMailjet,

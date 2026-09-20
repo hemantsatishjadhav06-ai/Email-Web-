@@ -15,13 +15,13 @@ describe('licenseRefusalFromBody', () => {
         feature: 'ses_tenant',
         required_tier: 'Studio',
         message: 'SES tenant isolation requires a Mailwave licence (Studio or above).',
-        docs: 'https://mailwave.com/licence-features'
+        docs: 'https://example.com/licence-features'
       })
     ).toEqual({
       feature: 'ses_tenant',
       requiredTier: 'Studio',
       message: 'SES tenant isolation requires a Mailwave licence (Studio or above).',
-      docs: 'https://mailwave.com/licence-features'
+      docs: 'https://example.com/licence-features'
     })
   })
 
@@ -32,7 +32,7 @@ describe('licenseRefusalFromBody', () => {
       error: 'license_required',
       feature: 'workspaces',
       message: 'workspace quota reached: 8 workspaces exist (limit: 3)',
-      docs: 'https://mailwave.com/licence-features'
+      docs: 'https://example.com/licence-features'
     })
 
     expect(refusal?.requiredTier).toBeNull()
@@ -68,7 +68,7 @@ describe('licenseRefusedMessage', () => {
       feature: 'sso',
       requiredTier: 'Enterprise',
       message: 'server prose',
-      docs: 'https://mailwave.com/licence-features'
+      docs: 'https://example.com/licence-features'
     })
 
     expect(message).toContain('Single sign-on')

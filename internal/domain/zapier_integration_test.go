@@ -25,7 +25,7 @@ func TestZapierSettings_Validate(t *testing.T) {
 	})
 
 	t.Run("minted address passes validation", func(t *testing.T) {
-		settings := &ZapierSettings{APIKeyEmail: "zapier-support-3f9a1c02@api.mailwave.com"}
+		settings := &ZapierSettings{APIKeyEmail: "zapier-support-3f9a1c02@api.example.com"}
 		assert.NoError(t, settings.Validate())
 	})
 }

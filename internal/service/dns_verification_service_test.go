@@ -37,8 +37,8 @@ func TestExtractHostname(t *testing.T) {
 	}{
 		{
 			name:     "Full URL with https",
-			input:    "https://preview.mailwave.com",
-			expected: "preview.mailwave.com",
+			input:    "https://preview.example.com",
+			expected: "preview.example.com",
 			wantErr:  false,
 		},
 		{
@@ -49,44 +49,44 @@ func TestExtractHostname(t *testing.T) {
 		},
 		{
 			name:     "URL with path",
-			input:    "https://preview.mailwave.com/path/to/resource",
-			expected: "preview.mailwave.com",
+			input:    "https://preview.example.com/path/to/resource",
+			expected: "preview.example.com",
 			wantErr:  false,
 		},
 		{
 			name:     "URL with query parameters",
-			input:    "https://preview.mailwave.com?param=value",
-			expected: "preview.mailwave.com",
+			input:    "https://preview.example.com?param=value",
+			expected: "preview.example.com",
 			wantErr:  false,
 		},
 		{
 			name:     "URL with port",
-			input:    "https://preview.mailwave.com:8080",
-			expected: "preview.mailwave.com",
+			input:    "https://preview.example.com:8080",
+			expected: "preview.example.com",
 			wantErr:  false,
 		},
 		{
 			name:     "Plain hostname",
-			input:    "preview.mailwave.com",
-			expected: "preview.mailwave.com",
+			input:    "preview.example.com",
+			expected: "preview.example.com",
 			wantErr:  false,
 		},
 		{
 			name:     "Hostname with trailing slash",
-			input:    "preview.mailwave.com/",
-			expected: "preview.mailwave.com",
+			input:    "preview.example.com/",
+			expected: "preview.example.com",
 			wantErr:  false,
 		},
 		{
 			name:     "Hostname with path",
-			input:    "preview.mailwave.com/path",
-			expected: "preview.mailwave.com",
+			input:    "preview.example.com/path",
+			expected: "preview.example.com",
 			wantErr:  false,
 		},
 		{
 			name:     "Hostname with query",
-			input:    "preview.mailwave.com?query=value",
-			expected: "preview.mailwave.com",
+			input:    "preview.example.com?query=value",
+			expected: "preview.example.com",
 			wantErr:  false,
 		},
 		{
@@ -97,8 +97,8 @@ func TestExtractHostname(t *testing.T) {
 		},
 		{
 			name:     "Just domain",
-			input:    "mailwave.com",
-			expected: "mailwave.com",
+			input:    "example.com",
+			expected: "example.com",
 			wantErr:  false,
 		},
 		{
@@ -126,7 +126,7 @@ func TestNewDNSVerificationService(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	mockLogger := pkgmocks.NewMockLogger(ctrl)
 
-	expectedTarget := "https://preview.mailwave.com"
+	expectedTarget := "https://preview.example.com"
 	service := NewDNSVerificationService(mockLogger, expectedTarget)
 
 	assert.NotNil(t, service)
@@ -134,7 +134,7 @@ func TestNewDNSVerificationService(t *testing.T) {
 }
 
 func TestDNSVerificationService_VerifyDomainOwnership_InvalidURL(t *testing.T) {
-	service, _ := setupDNSVerificationTest(t, "https://preview.mailwave.com")
+	service, _ := setupDNSVerificationTest(t, "https://preview.example.com")
 
 	tests := []struct {
 		name      string
@@ -174,7 +174,7 @@ func TestDNSVerificationService_VerifyDomainOwnership_InvalidURL(t *testing.T) {
 }
 
 func TestDNSVerificationService_VerifyDomainOwnership_ValidURL(t *testing.T) {
-	service, _ := setupDNSVerificationTest(t, "https://preview.mailwave.com")
+	service, _ := setupDNSVerificationTest(t, "https://preview.example.com")
 
 	// Test that valid URLs are parsed correctly
 	// Note: Actual DNS lookups will fail in unit tests, but we can test the URL parsing
@@ -210,19 +210,19 @@ func TestDNSVerificationService_VerifyDomainOwnership_ExpectedTargetExtraction(t
 	}{
 		{
 			name:           "Expected target as URL",
-			expectedTarget: "https://preview.mailwave.com",
+			expectedTarget: "https://preview.example.com",
 			domainURL:      "https://custom.example.com",
 			description:    "Should extract hostname from URL expectedTarget",
 		},
 		{
 			name:           "Expected target as hostname",
-			expectedTarget: "preview.mailwave.com",
+			expectedTarget: "preview.example.com",
 			domainURL:      "https://custom.example.com",
 			description:    "Should handle hostname-only expectedTarget",
 		},
 		{
 			name:           "Expected target with path",
-			expectedTarget: "https://preview.mailwave.com/api",
+			expectedTarget: "https://preview.example.com/api",
 			domainURL:      "https://custom.example.com",
 			description:    "Should extract hostname from URL with path",
 		},
@@ -248,7 +248,7 @@ func TestDNSVerificationService_VerifyDomainOwnership_ExpectedTargetExtraction(t
 }
 
 func TestDNSVerificationService_VerifyTXTRecord_InvalidURL(t *testing.T) {
-	service, _ := setupDNSVerificationTest(t, "https://preview.mailwave.com")
+	service, _ := setupDNSVerificationTest(t, "https://preview.example.com")
 
 	tests := []struct {
 		name      string
@@ -292,7 +292,7 @@ func TestDNSVerificationService_VerifyTXTRecord_InvalidURL(t *testing.T) {
 }
 
 func TestDNSVerificationService_VerifyTXTRecord_ValidURL(t *testing.T) {
-	service, _ := setupDNSVerificationTest(t, "https://preview.mailwave.com")
+	service, _ := setupDNSVerificationTest(t, "https://preview.example.com")
 
 	// Test that valid URLs are parsed correctly
 	validURLs := []string{
@@ -317,7 +317,7 @@ func TestDNSVerificationService_VerifyTXTRecord_ValidURL(t *testing.T) {
 }
 
 func TestDNSVerificationService_VerifyTXTRecord_ExpectedRecordFormat(t *testing.T) {
-	_, _ = setupDNSVerificationTest(t, "https://preview.mailwave.com")
+	_, _ = setupDNSVerificationTest(t, "https://preview.example.com")
 
 	// Test that the expected record format is correct
 	token := "test-verification-token-123"
@@ -372,22 +372,22 @@ func TestDNSVerificationService_VerifyARecord_ExpectedTargetExtraction(t *testin
 	}{
 		{
 			name:           "URL with https",
-			expectedTarget: "https://preview.mailwave.com",
+			expectedTarget: "https://preview.example.com",
 			description:    "Should extract hostname from https URL",
 		},
 		{
 			name:           "URL with http",
-			expectedTarget: "http://preview.mailwave.com",
+			expectedTarget: "http://preview.example.com",
 			description:    "Should extract hostname from http URL",
 		},
 		{
 			name:           "Plain hostname",
-			expectedTarget: "preview.mailwave.com",
+			expectedTarget: "preview.example.com",
 			description:    "Should handle plain hostname",
 		},
 		{
 			name:           "URL with path",
-			expectedTarget: "https://preview.mailwave.com/api",
+			expectedTarget: "https://preview.example.com/api",
 			description:    "Should extract hostname from URL with path",
 		},
 	}
@@ -413,7 +413,7 @@ func TestDNSVerificationService_VerifyARecord_ExpectedTargetExtraction(t *testin
 
 // TestDNSVerificationService_ErrorMessages tests that error messages are properly formatted
 func TestDNSVerificationService_ErrorMessages(t *testing.T) {
-	expectedTarget := "https://preview.mailwave.com"
+	expectedTarget := "https://preview.example.com"
 	service, _ := setupDNSVerificationTest(t, expectedTarget)
 
 	// Test invalid URL error message
@@ -447,23 +447,23 @@ func TestDNSVerificationService_CNAMEComparison(t *testing.T) {
 	}{
 		{
 			name:           "Exact match",
-			expectedTarget: "preview.mailwave.com",
-			cnameValue:     "preview.mailwave.com",
+			expectedTarget: "preview.example.com",
+			cnameValue:     "preview.example.com",
 			hostname:       "custom.example.com",
 			shouldMatch:    true,
 			description:    "CNAME exactly matches expected target",
 		},
 		{
 			name:           "Subdomain match",
-			expectedTarget: "mailwave.com",
-			cnameValue:     "subdomain.mailwave.com",
+			expectedTarget: "example.com",
+			cnameValue:     "subdomain.example.com",
 			hostname:       "custom.example.com",
-			shouldMatch:    false, // HasSuffix check - subdomain.mailwave.com ends with mailwave.com
+			shouldMatch:    false, // HasSuffix check - subdomain.example.com ends with example.com
 			description:    "CNAME is subdomain of expected target",
 		},
 		{
 			name:           "No match",
-			expectedTarget: "preview.mailwave.com",
+			expectedTarget: "preview.example.com",
 			cnameValue:     "different.example.com",
 			hostname:       "custom.example.com",
 			shouldMatch:    false,
@@ -471,7 +471,7 @@ func TestDNSVerificationService_CNAMEComparison(t *testing.T) {
 		},
 		{
 			name:           "CNAME points to itself (A record)",
-			expectedTarget: "preview.mailwave.com",
+			expectedTarget: "preview.example.com",
 			cnameValue:     "custom.example.com",
 			hostname:       "custom.example.com",
 			shouldMatch:    true, // Should fall back to A record check

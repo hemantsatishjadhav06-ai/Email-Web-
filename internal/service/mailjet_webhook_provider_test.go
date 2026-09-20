@@ -74,7 +74,7 @@ func TestMailjetService_RegisterWebhooksProvider(t *testing.T) {
 	ctx := context.Background()
 	workspaceID := "workspace-123"
 	integrationID := "integration-456"
-	baseURL := "https://api.mailwave.com"
+	baseURL := "https://api.example.com"
 	eventTypes := []domain.EmailEventType{
 		domain.EmailEventDelivered,
 		domain.EmailEventBounce,
@@ -345,7 +345,7 @@ func TestMailjetService_GetWebhookStatusProvider(t *testing.T) {
 		}
 
 		// Generate webhook URL
-		webhookURL := domain.GenerateWebhookCallbackURL("https://api.mailwave.com", domain.EmailProviderKindMailjet, workspaceID, integrationID)
+		webhookURL := domain.GenerateWebhookCallbackURL("https://api.example.com", domain.EmailProviderKindMailjet, workspaceID, integrationID)
 
 		// Response for ListWebhooks with registered webhooks
 		webhooksResponse := domain.MailjetWebhookResponse{
@@ -564,7 +564,7 @@ func TestMailjetService_UnregisterWebhooksProvider(t *testing.T) {
 		}
 
 		// Generate webhook URL
-		webhookURL := domain.GenerateWebhookCallbackURL("https://api.mailwave.com", domain.EmailProviderKindMailjet, workspaceID, integrationID)
+		webhookURL := domain.GenerateWebhookCallbackURL("https://api.example.com", domain.EmailProviderKindMailjet, workspaceID, integrationID)
 
 		// Response for ListWebhooks with registered webhooks
 		webhooksResponse := domain.MailjetWebhookResponse{
@@ -764,7 +764,7 @@ func TestMailjetService_UnregisterWebhooksProvider(t *testing.T) {
 		}
 
 		// Generate webhook URL
-		webhookURL := domain.GenerateWebhookCallbackURL("https://api.mailwave.com", domain.EmailProviderKindMailjet, workspaceID, integrationID)
+		webhookURL := domain.GenerateWebhookCallbackURL("https://api.example.com", domain.EmailProviderKindMailjet, workspaceID, integrationID)
 
 		// Response for ListWebhooks with registered webhooks
 		webhooksResponse := domain.MailjetWebhookResponse{

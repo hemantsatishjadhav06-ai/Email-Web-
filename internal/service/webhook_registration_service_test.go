@@ -36,7 +36,7 @@ func TestWebhookRegistrationService_RegisterWebhooks(t *testing.T) {
 	workspaceID := "workspace-123"
 	integrationID := "integration-456"
 	userID := "user-789"
-	apiEndpoint := "https://api.mailwave.com"
+	apiEndpoint := "https://api.example.com"
 
 	// Create a mock user
 	user := &domain.User{ID: userID}
@@ -64,7 +64,7 @@ func TestWebhookRegistrationService_RegisterWebhooks(t *testing.T) {
 				Endpoints: []domain.WebhookEndpointStatus{
 					{
 						WebhookID: "webhook-123",
-						URL:       "https://api.mailwave.com/webhooks/email?provider=postmark&workspace_id=workspace-123&integration_id=integration-456",
+						URL:       "https://api.example.com/webhooks/email?provider=postmark&workspace_id=workspace-123&integration_id=integration-456",
 						EventType: domain.EmailEventDelivered,
 						Active:    true,
 					},
@@ -237,7 +237,7 @@ func (f *fakeInboundProvider) EnsureInboundRoute(_ context.Context, _ *domain.Em
 
 func TestWebhookRegistrationService_RegisterWebhooks_RegistersInboundRoute(t *testing.T) {
 	ctx := context.Background()
-	const workspaceID, integrationID, apiEndpoint = "ws-1", "int-1", "https://api.mailwave.com"
+	const workspaceID, integrationID, apiEndpoint = "ws-1", "int-1", "https://api.example.com"
 
 	newSvc := func(ctrl *gomock.Controller, provider domain.WebhookProvider) *WebhookRegistrationService {
 		mockWorkspaceRepo := mocks.NewMockWorkspaceRepository(ctrl)
@@ -346,7 +346,7 @@ func TestWebhookRegistrationService_GetWebhookStatus(t *testing.T) {
 	workspaceID := "workspace-123"
 	integrationID := "integration-456"
 	userID := "user-789"
-	apiEndpoint := "https://api.mailwave.com"
+	apiEndpoint := "https://api.example.com"
 
 	// Create a mock user
 	user := &domain.User{ID: userID}
@@ -369,7 +369,7 @@ func TestWebhookRegistrationService_GetWebhookStatus(t *testing.T) {
 				Endpoints: []domain.WebhookEndpointStatus{
 					{
 						WebhookID: "webhook-123",
-						URL:       "https://api.mailwave.com/webhooks/email?provider=mailgun&workspace_id=workspace-123&integration_id=integration-456",
+						URL:       "https://api.example.com/webhooks/email?provider=mailgun&workspace_id=workspace-123&integration_id=integration-456",
 						EventType: domain.EmailEventDelivered,
 						Active:    true,
 					},
@@ -518,7 +518,7 @@ func TestWebhookRegistrationService_UnregisterWebhooks(t *testing.T) {
 	workspaceID := "workspace-123"
 	integrationID := "integration-456"
 	userID := "user-789"
-	apiEndpoint := "https://api.mailwave.com"
+	apiEndpoint := "https://api.example.com"
 
 	// Create a mock user
 	user := &domain.User{ID: userID}
@@ -669,7 +669,7 @@ func TestWebhookRegistrationService_GetEmailProviderConfig(t *testing.T) {
 	ctx := context.Background()
 	workspaceID := "workspace-123"
 	integrationID := "integration-456"
-	apiEndpoint := "https://api.mailwave.com"
+	apiEndpoint := "https://api.example.com"
 
 	tests := []struct {
 		name                string
@@ -775,7 +775,7 @@ func TestNewWebhookRegistrationService(t *testing.T) {
 	mockSendGridService := mocks.NewMockSendGridServiceInterface(ctrl)
 
 	// Test constants
-	apiEndpoint := "https://api.mailwave.com"
+	apiEndpoint := "https://api.example.com"
 
 	// Create service with the mocks
 	svc := NewWebhookRegistrationService(
@@ -836,7 +836,7 @@ func TestWebhookRegistrationService_OwnerOnly(t *testing.T) {
 			workspaceRepo:    mocks.NewMockWorkspaceRepository(ctrl),
 			authService:      mockAuthService,
 			logger:           mockLogger,
-			apiEndpoint:      "https://api.mailwave.com",
+			apiEndpoint:      "https://api.example.com",
 			webhookProviders: map[domain.EmailProviderKind]domain.WebhookProvider{},
 		}
 	}
