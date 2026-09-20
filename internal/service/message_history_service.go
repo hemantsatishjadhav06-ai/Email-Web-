@@ -1,0 +1,180 @@
+package service
+
+import (
+	"context"
+	"errors"
+	"fmt"
+
+	"github.com/Mailwave/mailwave/internal/domain"
+	"github.com/Mailwave/mailwave/pkg/logger"
+	"github.com/Mailwave/mailwave/pkg/tracing"
+)
+
+// MessageHistoryService implements domain.MessageHistoryService interface
+type MessageHistoryService struct {
+	repo          domain.MessageHistoryRepository
+	workspaceRepo domain.WorkspaceRepository
+	logger        logger.Logger
+	authService   domain.AuthService
+	// emailQueueRepo is read-only here, for the broadcast delivery counts. Message
+	// history does not own the queue; it is the only place the console asks about a
+	// broadcast often enough to answer "is this finished?" without a second poll.
+	emailQueueRepo domain.EmailQueueRepository
+}
+
+// NewMessageHistoryService creates a new message history service
+func NewMessageHistoryService(repo domain.MessageHistoryRepository, workspaceRepo domain.WorkspaceRepository, logger logger.Logger, authService domain.AuthService, emailQueueRepo domain.EmailQueueRepository) *MessageHistoryService {
+	return &MessageHistoryService{
+		repo:           repo,
+		workspaceRepo:  workspaceRepo,
+		logger:         logger,
+		authService:    authService,
+		emailQueueRepo: emailQueueRepo,
+	}
+}
+
+// ListMessages retrieves messages for a workspace with cursor-based pagination and filters
+func (s *MessageHistoryService) ListMessages(ctx context.Context, workspaceID string, params domain.MessageListParams) (*domain.MessageListResult, error) {
+	// codecov:ignore:start
+
+	ctx, span := tracing.StartServiceSpan(ctx, "MessageHistoryService", "ListMessages")
+	defer tracing.EndSpan(span, nil)
+	tracing.AddAttribute(ctx, "workspaceID", workspaceID)
+	// codecov:ignore:end
+
+	var err error
+	ctx, _, userWorkspace, err := s.authService.AuthenticateUserForWorkspace(ctx, workspaceID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to authenticate user: %w", err)
+	}
+
+	// Check permission for reading message history
+	if !userWorkspace.HasPermission(domain.PermissionResourceMessageHistory, domain.PermissionTypeRead) {
+		return nil, domain.NewPermissionError(
+			domain.PermissionResourceMessageHistory,
+			domain.PermissionTypeRead,
+			"Insufficient permissions: read access to message history required",
+		)
+	}
+
+	// Get workspace to retrieve secret key for decryption
+	workspace, err := s.workspaceRepo.GetByID(ctx, workspaceID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get workspace: %w", err)
+	}
+
+	// Call repository method with pagination and filtering parameters
+	messages, nextCursor, err := s.repo.ListMessages(ctx, workspaceID, workspace.Settings.SecretKey, params)
+
+	// codecov:ignore:start
+	if err != nil {
+		s.logger.Error(fmt.Sprintf("Failed to list messages: %v", err))
+		tracing.MarkSpanError(ctx, err)
+		return nil, err
+	}
+	// codecov:ignore:end
+
+	return &domain.MessageListResult{
+		Messages:   messages,
+		NextCursor: nextCursor,
+		HasMore:    nextCursor != "",
+	}, nil
+}
+
+func (s *MessageHistoryService) GetBroadcastStats(ctx context.Context, workspaceID string, id string) (*domain.BroadcastDeliveryStats, error) {
+	var err error
+	ctx, _, userWorkspace, err := s.authService.AuthenticateUserForWorkspace(ctx, workspaceID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to authenticate user: %w", err)
+	}
+
+	// Check permission for reading message history
+	if !userWorkspace.HasPermission(domain.PermissionResourceMessageHistory, domain.PermissionTypeRead) {
+		return nil, domain.NewPermissionError(
+			domain.PermissionResourceMessageHistory,
+			domain.PermissionTypeRead,
+			"Insufficient permissions: read access to message history required",
+		)
+	}
+
+	stats, err := s.repo.GetBroadcastStats(ctx, workspaceID, id)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get broadcast stats: %w", err)
+	}
+
+	result := &domain.BroadcastDeliveryStats{Stats: stats}
+
+	// The queue counts are what tell a finished campaign from one still working, and
+	// a campaign that gave up on people from one that reached everyone. They are not
+	// worth failing the whole call for: without them the page loses the completion
+	// badge, with them missing entirely it loses the numbers too.
+	if s.emailQueueRepo != nil {
+		counts, countErr := s.emailQueueRepo.GetSourceCounts(ctx, workspaceID, domain.EmailQueueSourceBroadcast, id)
+		if countErr != nil {
+			s.logger.WithFields(map[string]interface{}{
+				"workspace_id": workspaceID,
+				"broadcast_id": id,
+				"error":        countErr.Error(),
+			}).Warn("Failed to read broadcast queue counts; returning stats without them")
+		} else {
+			result.Queue = counts
+		}
+	}
+
+	return result, nil
+}
+
+// GetBroadcastLinkStats retrieves per-URL click statistics for a broadcast
+func (s *MessageHistoryService) GetBroadcastLinkStats(ctx context.Context, workspaceID, broadcastID, templateID string) ([]domain.LinkClickStats, error) {
+	var err error
+	ctx, _, userWorkspace, err := s.authService.AuthenticateUserForWorkspace(ctx, workspaceID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to authenticate user: %w", err)
+	}
+
+	// Check permission for reading message history
+	if !userWorkspace.HasPermission(domain.PermissionResourceMessageHistory, domain.PermissionTypeRead) {
+		return nil, domain.NewPermissionError(
+			domain.PermissionResourceMessageHistory,
+			domain.PermissionTypeRead,
+			"Insufficient permissions: read access to message history required",
+		)
+	}
+
+	stats, err := s.repo.GetBroadcastLinkStats(ctx, workspaceID, broadcastID, templateID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get broadcast link stats: %w", err)
+	}
+
+	return stats, nil
+}
+
+// GetBroadcastVariationStats retrieves statistics for a specific variation of a broadcast
+func (s *MessageHistoryService) GetBroadcastVariationStats(ctx context.Context, workspaceID, broadcastID, templateID string) (*domain.MessageHistoryStatusSum, error) {
+	var err error
+	ctx, _, userWorkspace, err := s.authService.AuthenticateUserForWorkspace(ctx, workspaceID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to authenticate user: %w", err)
+	}
+
+	// Check permission for reading message history
+	if !userWorkspace.HasPermission(domain.PermissionResourceMessageHistory, domain.PermissionTypeRead) {
+		return nil, domain.NewPermissionError(
+			domain.PermissionResourceMessageHistory,
+			domain.PermissionTypeRead,
+			"Insufficient permissions: read access to message history required",
+		)
+	}
+
+	// Validate input parameters
+	if templateID == "" {
+		return nil, errors.New("template ID cannot be empty")
+	}
+
+	stats, err := s.repo.GetBroadcastVariationStats(ctx, workspaceID, broadcastID, templateID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get broadcast variation stats: %w", err)
+	}
+
+	return stats, nil
+}

@@ -1,0 +1,59 @@
+.env
+.env.test
+
+*.log
+node_modules
+pkg/liquid/liquid.bundle.js
+.DS_Store
+server/tmp/
+tmp/
+
+bin/
+coverage.html
+coverage.out
+coverage.txt
+coverage-unit.txt
+coverage-integration.txt
+/api
+console/public/config.js
+
+notification_center/tsconfig.tsbuildinfo
+dev-certs/
+
+coverage-internal-pkg.out
+
+coverage-report.txt
+
+.claude/settings.local.json
+
+console/.claude/settings.local.json
+
+service.test
+
+integration.test
+
+# Diagnostic dumps written by integration tests when they fail (currently
+# segment_queue_concurrency_test.go). They are timestamped, so every run leaves
+# another one and they never stop accumulating in git status. Two had been
+# committed before this rule existed and were untracked with it.
+tests/integration/diagnostics/*.json
+
+# MaxMind GeoIP databases. The City database shipped with Mailwave is tracked
+# on purpose (see data/GeoLite2-City.mmdb); any other .mmdb is a local download
+# and has no business in the history — they weigh ~60 MB each.
+*.mmdb
+!data/GeoLite2-City.mmdb
+
+
+TODO.md
+
+# A stray licensegen binary at the repository root. The tool itself lives in the
+# private cloud repository — it mints production keys, so it has no business in a
+# public one — but `go build` of a checkout that still has it, or a binary copied
+# here to run once, leaves 3.3 MB that `git add -A` would commit without a word.
+#
+# There is deliberately no cmd/licensegen rule any more: that path does not exist
+# in this repository, and a rule for a path nobody has invites the reader to
+# believe the tool is here.
+/licensegen
+

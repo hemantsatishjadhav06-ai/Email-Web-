@@ -1,0 +1,202 @@
+package http
+
+import (
+	"encoding/json"
+	"net/http"
+	"strconv"
+
+	"github.com/Mailwave/mailwave/internal/domain"
+	"github.com/Mailwave/mailwave/internal/http/middleware"
+	"github.com/Mailwave/mailwave/pkg/logger"
+)
+
+type CustomEventHandler struct {
+	service      domain.CustomEventService
+	logger       logger.Logger
+	getJWTSecret func() ([]byte, error)
+}
+
+func NewCustomEventHandler(service domain.CustomEventService, getJWTSecret func() ([]byte, error), logger logger.Logger) *CustomEventHandler {
+	return &CustomEventHandler{
+		service:      service,
+		getJWTSecret: getJWTSecret,
+		logger:       logger,
+	}
+}
+
+// RegisterRoutes registers the custom event HTTP endpoints
+func (h *CustomEventHandler) RegisterRoutes(mux *http.ServeMux) {
+	// Create auth middleware
+	authMiddleware := middleware.NewAuthMiddleware(h.getJWTSecret)
+	requireAuth := authMiddleware.RequireAuth()
+
+	// Register RPC-style endpoints with dot notation
+	mux.Handle("/api/customEvents.upsert", requireAuth(http.HandlerFunc(h.UpsertCustomEvent)))
+	mux.Handle("/api/customEvents.import", requireAuth(http.HandlerFunc(h.ImportCustomEvents)))
+	mux.Handle("/api/customEvents.get", requireAuth(http.HandlerFunc(h.GetCustomEvent)))
+	mux.Handle("/api/customEvents.list", requireAuth(http.HandlerFunc(h.ListCustomEvents)))
+}
+
+// POST /api/customEvents.upsert - creates or updates a custom event
+// Supports goal tracking (goal_name, goal_type, goal_value) and soft-delete (deleted_at)
+func (h *CustomEventHandler) UpsertCustomEvent(w http.ResponseWriter, r *http.Request) {
+	// POST only, like every other write in this package. Without it this handler decodes
+	// its body whatever the verb, so GET performs the upsert — including the soft-delete
+	// path. Nothing upstream stops that: the mux matches on path alone.
+	if r.Method != http.MethodPost {
+		WriteJSONError(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	var req domain.UpsertCustomEventRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		h.logger.WithField("error", err.Error()).Error("Failed to decode request")
+		WriteJSONError(w, "Invalid request body", http.StatusBadRequest)
+		return
+	}
+
+	event, err := h.service.UpsertEvent(r.Context(), &req)
+	if err != nil {
+		h.logger.WithField("error", err.Error()).Error("Failed to upsert custom event")
+		if writePermissionError(w, err) {
+			return
+		}
+		if _, ok := err.(domain.ValidationError); ok {
+			WriteJSONError(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+		WriteJSONError(w, "Failed to upsert custom event", http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	_ = json.NewEncoder(w).Encode(map[string]interface{}{
+		"event": event,
+	})
+}
+
+// POST /api/customEvents.import
+func (h *CustomEventHandler) ImportCustomEvents(w http.ResponseWriter, r *http.Request) {
+	// POST only. See UpsertCustomEvent — this one bulk-imports.
+	if r.Method != http.MethodPost {
+		WriteJSONError(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	var req domain.ImportCustomEventsRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		h.logger.WithField("error", err.Error()).Error("Failed to decode request")
+		WriteJSONError(w, "Invalid request body", http.StatusBadRequest)
+		return
+	}
+
+	eventIDs, err := h.service.ImportEvents(r.Context(), &req)
+	if err != nil {
+		h.logger.WithField("error", err.Error()).Error("Failed to import custom events")
+		if writePermissionError(w, err) {
+			return
+		}
+		if _, ok := err.(domain.ValidationError); ok {
+			WriteJSONError(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+		WriteJSONError(w, "Failed to import custom events", http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusCreated)
+	_ = json.NewEncoder(w).Encode(map[string]interface{}{
+		"event_ids": eventIDs,
+		"count":     len(eventIDs),
+	})
+}
+
+// GET /api/customEvents.get
+func (h *CustomEventHandler) GetCustomEvent(w http.ResponseWriter, r *http.Request) {
+	workspaceID := r.URL.Query().Get("workspace_id")
+	eventName := r.URL.Query().Get("event_name")
+	externalID := r.URL.Query().Get("external_id")
+
+	if workspaceID == "" || eventName == "" || externalID == "" {
+		WriteJSONError(w, "workspace_id, event_name, and external_id are required", http.StatusBadRequest)
+		return
+	}
+
+	event, err := h.service.GetEvent(r.Context(), workspaceID, eventName, externalID)
+	if err != nil {
+		h.logger.WithField("error", err.Error()).Error("Failed to get custom event")
+		if writePermissionError(w, err) {
+			return
+		}
+		WriteJSONError(w, "Custom event not found", http.StatusNotFound)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	_ = json.NewEncoder(w).Encode(map[string]interface{}{
+		"event": event,
+	})
+}
+
+// GET /api/customEvents.list
+func (h *CustomEventHandler) ListCustomEvents(w http.ResponseWriter, r *http.Request) {
+	workspaceID := r.URL.Query().Get("workspace_id")
+	email := r.URL.Query().Get("email")
+	eventName := r.URL.Query().Get("event_name")
+
+	if workspaceID == "" {
+		WriteJSONError(w, "workspace_id is required", http.StatusBadRequest)
+		return
+	}
+
+	if email == "" && eventName == "" {
+		WriteJSONError(w, "either email or event_name is required", http.StatusBadRequest)
+		return
+	}
+
+	// Parse limit and offset
+	limit := 50
+	if limitStr := r.URL.Query().Get("limit"); limitStr != "" {
+		if parsedLimit, err := strconv.Atoi(limitStr); err == nil {
+			limit = parsedLimit
+		}
+	}
+
+	offset := 0
+	if offsetStr := r.URL.Query().Get("offset"); offsetStr != "" {
+		if parsedOffset, err := strconv.Atoi(offsetStr); err == nil {
+			offset = parsedOffset
+		}
+	}
+
+	req := &domain.ListCustomEventsRequest{
+		WorkspaceID: workspaceID,
+		Email:       email,
+		Limit:       limit,
+		Offset:      offset,
+	}
+
+	if eventName != "" {
+		req.EventName = &eventName
+	}
+
+	events, err := h.service.ListEvents(r.Context(), req)
+	if err != nil {
+		h.logger.WithField("error", err.Error()).Error("Failed to list custom events")
+		if writePermissionError(w, err) {
+			return
+		}
+		if _, ok := err.(domain.ValidationError); ok {
+			WriteJSONError(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+		WriteJSONError(w, "Failed to list custom events", http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	_ = json.NewEncoder(w).Encode(map[string]interface{}{
+		"events": events,
+		"count":  len(events),
+	})
+}

@@ -1,0 +1,1 @@
+window.API_ENDPOINT = 'https://localapi.mailwave.com:4000'
