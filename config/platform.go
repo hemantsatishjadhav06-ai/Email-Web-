@@ -1,7 +1,6 @@
 package config
 
 import (
-	"fmt"
 	"os"
 	"strings"
 )
@@ -19,10 +18,7 @@ func DetectRailway() bool {
 }
 
 // CheckBlockedPlatforms returns an error if the application is running on a
-// platform that is no longer supported.
+// platform that is no longer supported. No platforms are currently blocked.
 func CheckBlockedPlatforms() error {
-	if DetectRailway() {
-		return fmt.Errorf("Mailwave cannot run on Railway.com. Railway.com has violated Mailwave's copyright and is therefore no longer supported.")
-	}
 	return nil
 }

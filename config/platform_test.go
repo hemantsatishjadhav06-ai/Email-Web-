@@ -47,8 +47,7 @@ func TestCheckBlockedPlatforms_Railway(t *testing.T) {
 	t.Setenv("RAILWAY_PROJECT_ID", "abc123")
 	t.Setenv("RAILWAY_SERVICE_ID", "svc456")
 
+	// No platforms are currently blocked, so running on Railway is allowed.
 	err := CheckBlockedPlatforms()
-	assert.Error(t, err)
-	assert.Contains(t, err.Error(), "Railway.com has violated Mailwave's copyright")
-	assert.Contains(t, err.Error(), "no longer supported")
+	assert.NoError(t, err)
 }
